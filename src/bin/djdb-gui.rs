@@ -20,6 +20,7 @@ fn main() -> eframe::Result<()> {
     let data_dir = std::env::args()
         .nth(1)
         .map(PathBuf::from)
+        .or_else(find_data_dir)
         .unwrap_or_else(|| PathBuf::from("data"));
 
     let options = eframe::NativeOptions {
@@ -35,6 +36,36 @@ fn main() -> eframe::Result<()> {
         options,
         Box::new(move |_cc| Ok(Box::new(DjdbApp::new(data_dir)))),
     )
+}
+
+/// Walk upward from the current working directory and from the binary's
+/// location looking for a `data/performers.toml`. This lets users launch
+/// the binary from anywhere (file manager, target/release, etc.) without
+/// passing an explicit path.
+fn find_data_dir() -> Option<PathBuf> {
+    let mut candidates: Vec<PathBuf> = Vec::new();
+    if let Ok(cwd) = std::env::current_dir() {
+        candidates.push(cwd);
+    }
+    if let Ok(exe) = std::env::current_exe() {
+        if let Some(parent) = exe.parent() {
+            candidates.push(parent.to_path_buf());
+        }
+    }
+    for start in candidates {
+        let mut dir = start.as_path();
+        loop {
+            let candidate = dir.join("data").join("performers.toml");
+            if candidate.is_file() {
+                return Some(dir.join("data"));
+            }
+            match dir.parent() {
+                Some(p) => dir = p,
+                None => break,
+            }
+        }
+    }
+    None
 }
 
 // ============================================================
