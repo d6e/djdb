@@ -1,3 +1,4 @@
+pub mod commands;
 pub mod data;
 pub mod import;
 pub mod performer;

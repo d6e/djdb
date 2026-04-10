@@ -37,15 +37,17 @@ happy-path load.
 
 ### Stage 2: mutation + query CLI
 
-Commands: `new-show`, `add-set`, `new-performer`, `rename-performer`,
-`last-played`, `stale`.
+Commands: `add-set` (creates the show file on first use), `new-performer`,
+`rename-performer`, `merge-performer`, `last-played`, `stale`.
 
 Success criteria:
 - Each command round-trips through `check` without errors.
 - `rename-performer` updates `performers.toml` and every referencing show.
 - Tests for each command against a tempdir fixture.
 
-Status: not started.
+Status: done. 13 command tests, smoke-tested against the real imported
+dataset (`last-played aliquem` = 2026-05-02, `stale --days 90` returns
+219 performers sorted oldest-first).
 
 ### Stage 3: static site generator
 
@@ -80,4 +82,8 @@ Success criteria:
 - Imports `data/kaleidosky.xlsx` producing valid show files that pass `check`.
 - Ambiguous matches are reported, not silently guessed.
 
-Status: not started.
+Status: done (stage reordered, ran before 2-4). 63 shows imported with
+`--min-year 2025`. Pre-2025 sheets skipped due to out-of-order workbook
+layout; will be addressed manually. Known junk performer entries
+flagged for cleanup once `rename-performer` / merge commands land in
+stage 2.
