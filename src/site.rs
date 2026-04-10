@@ -200,7 +200,6 @@ fn layout(cfg: &BuildConfig, page_title: &str, body: Markup) -> Markup {
                     }
                 }
                 main { (body) }
-                footer { "generated with djdb" }
             }
         }
     }
@@ -224,10 +223,10 @@ fn lineup_table(show: &Show, performers: &Performers, cfg: &BuildConfig) -> Mark
                 @for set in &show.sets {
                     @let (et, jst) = format_et_jst(show.date, set.start);
                     tr {
-                        td class="time" { (et) }
-                        td class="time" { (jst) }
-                        td { (performer_link(set.dj.as_deref(), performers, cfg)) }
-                        td { (performer_link(set.vj.as_deref(), performers, cfg)) }
+                        td class="time et" { (et) }
+                        td class="time jst" { (jst) }
+                        td class="dj" { (performer_link(set.dj.as_deref(), performers, cfg)) }
+                        td class="vj" { (performer_link(set.vj.as_deref(), performers, cfg)) }
                         td class="notes" { (set.notes) }
                     }
                 }
@@ -280,44 +279,50 @@ fn landing(ds: &Dataset, cfg: &BuildConfig) -> Markup {
             h1 { "KaleidoSky" }
             p class="tagline" { "Weekly DJ lineups in VRChat." }
 
-            @if let Some(show) = next {
-                section class="next-show" {
-                    h2 {
-                        "Next show · "
-                        (show.date.format("%A, %B %-e, %Y").to_string())
+            div class="landing" {
+                section class="landing-main" {
+                    @if let Some(show) = next {
+                        section class="next-show" {
+                            h2 {
+                                "Next show · "
+                                (show.date.format("%A, %B %-e, %Y").to_string())
+                            }
+                            (lineup_table(show, &ds.performers, cfg))
+                        }
+                    } @else {
+                        p { "No upcoming shows scheduled." }
                     }
-                    (lineup_table(show, &ds.performers, cfg))
                 }
-            } @else {
-                p { "No upcoming shows scheduled." }
-            }
 
-            @if !upcoming.is_empty() {
-                section class="upcoming" {
-                    h2 { "Upcoming" }
-                    ul class="show-list" {
-                        @for s in upcoming {
-                            li {
-                                a href=(url(cfg, &format!("shows/{}/", s.date))) {
-                                    (s.date.format("%Y-%m-%d · %a").to_string())
+                aside class="landing-aside" {
+                    @if !upcoming.is_empty() {
+                        section class="upcoming" {
+                            h2 { "Upcoming" }
+                            ul class="show-list" {
+                                @for s in upcoming {
+                                    li {
+                                        a href=(url(cfg, &format!("shows/{}/", s.date))) {
+                                            (s.date.format("%Y-%m-%d · %a").to_string())
+                                        }
+                                        " · " (s.sets.len()) " sets"
+                                    }
                                 }
-                                " · " (s.sets.len()) " sets"
                             }
                         }
                     }
-                }
-            }
 
-            @if !past.is_empty() {
-                section class="past" {
-                    h2 { "Past shows" }
-                    ul class="show-list" {
-                        @for s in past {
-                            li {
-                                a href=(url(cfg, &format!("shows/{}/", s.date))) {
-                                    (s.date.format("%Y-%m-%d · %a").to_string())
+                    @if !past.is_empty() {
+                        section class="past" {
+                            h2 { "Past shows" }
+                            ul class="show-list" {
+                                @for s in past {
+                                    li {
+                                        a href=(url(cfg, &format!("shows/{}/", s.date))) {
+                                            (s.date.format("%Y-%m-%d · %a").to_string())
+                                        }
+                                        " · " (s.sets.len()) " sets"
+                                    }
                                 }
-                                " · " (s.sets.len()) " sets"
                             }
                         }
                     }
@@ -474,13 +479,12 @@ html, body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     line-height: 1.5;
 }
-body { max-width: 960px; margin: 0 auto; padding: 1rem; }
+body { max-width: 1100px; margin: 0 auto; padding: 1rem; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 header { border-bottom: 1px solid var(--rule); padding-bottom: 1rem; margin-bottom: 2rem; }
 header nav { font-size: 1rem; color: var(--dim); }
 header nav .site-title { font-weight: bold; color: var(--fg); font-size: 1.1rem; }
-footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--dim); font-size: 0.85rem; }
 h1 { margin: 0.5rem 0 1rem; }
 h2 { margin-top: 2rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.3rem; }
 .tagline { color: var(--dim); margin-top: -0.5rem; }
@@ -496,6 +500,63 @@ td.notes { color: var(--dim); font-size: 0.9rem; }
 .lineup tbody tr:hover { background: var(--panel); }
 .show-list, .performer-list { list-style: none; padding: 0; }
 .show-list li, .performer-list li { padding: 0.4rem 0; border-bottom: 1px solid var(--rule); }
+
+/* Landing two-column layout. Collapses to single column on narrow
+   viewports so mobile users see Next show first, then sidebar below. */
+.landing {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 2rem;
+    align-items: start;
+}
+.landing-main { min-width: 0; }
+.landing-aside { font-size: 0.95rem; }
+.landing-aside h2 { font-size: 1.05rem; margin-top: 0.5rem; }
+.landing-aside h2:first-of-type { margin-top: 0; }
+.landing-aside .show-list li { padding: 0.3rem 0; }
+
+@media (max-width: 860px) {
+    .landing { grid-template-columns: 1fr; gap: 0; }
+}
+
+/* Responsive lineup table: below 600px, each row becomes a card with
+   labeled fields so the 5-column layout doesn't squash on phones. */
+@media (max-width: 600px) {
+    .lineup thead { display: none; }
+    .lineup, .lineup tbody { display: block; }
+    .lineup tr {
+        display: block;
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 0.6rem 0.8rem;
+        margin-bottom: 0.6rem;
+        background: var(--panel);
+    }
+    .lineup td {
+        display: block;
+        padding: 0.15rem 0;
+        border: none;
+    }
+    .lineup td.time { display: inline-block; margin-right: 0.8rem; }
+    .lineup td.time.et::before { content: "ET "; color: var(--dim); font-weight: normal; }
+    .lineup td.time.jst::before { content: "JST "; color: var(--dim); font-weight: normal; }
+    .lineup td.dj { font-size: 1.1rem; margin-top: 0.2rem; }
+    .lineup td.vj::before { content: "VJ: "; color: var(--dim); font-size: 0.85rem; }
+    .lineup td:empty { display: none; }
+
+    /* Same treatment for the per-performer history table. */
+    .history thead { display: none; }
+    .history, .history tbody { display: block; }
+    .history tr {
+        display: block;
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 0.5rem 0.8rem;
+        margin-bottom: 0.5rem;
+        background: var(--panel);
+    }
+    .history td { display: inline-block; padding: 0.1rem 0.4rem 0.1rem 0; border: none; }
+}
 "#;
 
 #[cfg(test)]
