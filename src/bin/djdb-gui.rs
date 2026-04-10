@@ -112,7 +112,7 @@ enum Tab {
 struct DjdbApp {
     data_dir: PathBuf,
     dataset: Option<Dataset>,
-    load_error: Option<String>,
+    load_error: Option<LoadError>,
     tab: Tab,
 
     // Shows tab
@@ -145,11 +145,32 @@ struct Toast {
     error: bool,
 }
 
+/// Classified load failure with optional recovery hints.
+#[derive(Clone)]
+struct LoadError {
+    message: String,
+    /// If the failure was an unknown-performer reference, the slug we can
+    /// offer to stub out for the user.
+    missing_slug: Option<String>,
+    /// If the failure pinpoints a specific file, its path so we can offer
+    /// to open it in the system editor.
+    file_to_open: Option<PathBuf>,
+}
+
 #[derive(Clone)]
 struct ShowDraft {
     date: NaiveDate,
     sets: Vec<SetDraft>,
     dirty: bool,
+    /// Hash of the show file when this draft was loaded. `None` for a
+    /// brand new show that has no on-disk counterpart yet.
+    disk_hash_at_load: Option<u64>,
+    /// Set when a focus-gain reload notices the on-disk file differs from
+    /// `disk_hash_at_load`. Surfaced as a `(disk changed)` header badge.
+    disk_changed: bool,
+    /// Set when Save detects a conflict. While true, Save behaves as a
+    /// "Save anyway" confirm - clicking it again forces the overwrite.
+    conflict: bool,
 }
 
 #[derive(Clone, Default)]
@@ -171,6 +192,12 @@ struct PerformerDraft {
     cdn: String,
     notes: String,
     dirty: bool,
+    /// Hash of `performers.toml` when this draft was loaded. All performer
+    /// drafts share the same underlying file, so any external edit to any
+    /// performer is treated as a potential conflict.
+    disk_hash_at_load: Option<u64>,
+    disk_changed: bool,
+    conflict: bool,
 }
 
 impl DjdbApp {
@@ -206,7 +233,7 @@ impl DjdbApp {
             }
             Err(e) => {
                 self.dataset = None;
-                self.load_error = Some(format!("{e:#}"));
+                self.load_error = Some(classify_load_error(&e, &self.data_dir));
             }
         }
     }
@@ -232,12 +259,16 @@ impl DjdbApp {
 
 impl eframe::App for DjdbApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        // Silently reload whenever the window regains focus, so edits made
-        // from the CLI / text editor / git pull show up when the user comes
-        // back. Dirty drafts stay in memory and are left alone.
+        // Reload whenever the window regains focus, so edits made from the
+        // CLI / text editor / git pull show up when the user comes back.
+        // Dirty drafts stay in memory; if their source file actually
+        // changed under them, mark `disk_changed` so the editor header can
+        // warn before Save.
         let focused = ctx.input(|i| i.focused);
         if focused && !self.prev_focused {
             self.reload();
+            self.recheck_draft_conflicts();
+            self.set_ok("reloaded from disk");
         }
         self.prev_focused = focused;
 
@@ -266,13 +297,69 @@ impl eframe::App for DjdbApp {
         });
 
         if let Some(err) = self.load_error.clone() {
+            let mut do_retry = false;
+            let mut do_create_stub = false;
+            let mut do_open_file = false;
             egui::CentralPanel::default().show(ctx, |ui| {
                 ui.heading("Failed to load dataset");
-                ui.label(err);
-                if ui.button("Retry").clicked() {
-                    self.reload();
-                }
+                ui.label(&err.message);
+                ui.add_space(12.0);
+                ui.horizontal(|ui| {
+                    if ui.button("Retry").clicked() {
+                        do_retry = true;
+                    }
+                    if let Some(slug) = &err.missing_slug {
+                        if ui
+                            .button(format!("Create stub performer \"{slug}\""))
+                            .clicked()
+                        {
+                            do_create_stub = true;
+                        }
+                    }
+                    if err.file_to_open.is_some() && ui.button("Open file in editor").clicked() {
+                        do_open_file = true;
+                    }
+                });
+                ui.add_space(8.0);
+                ui.label(
+                    RichText::new(
+                        "You can also fix the underlying file by hand and click Retry.",
+                    )
+                    .color(egui::Color32::GRAY),
+                );
             });
+
+            if do_retry {
+                self.reload();
+            }
+            if do_create_stub {
+                if let Some(slug) = err.missing_slug.clone() {
+                    match commands::new_performer(
+                        &self.data_dir,
+                        commands::NewPerformerArgs {
+                            slug: &slug,
+                            display_name: &slug,
+                            twitch: "",
+                            cdn: "",
+                            notes: "",
+                            aliases: vec![],
+                        },
+                    ) {
+                        Ok(()) => {
+                            self.reload();
+                            self.set_ok(format!("created stub performer {slug}"));
+                        }
+                        Err(e) => self.set_err(format!("{e:#}")),
+                    }
+                }
+            }
+            if do_open_file {
+                if let Some(path) = err.file_to_open.clone() {
+                    if let Err(e) = open_in_editor(&path) {
+                        self.set_err(format!("couldn't open editor: {e}"));
+                    }
+                }
+            }
             return;
         }
 
@@ -380,11 +467,30 @@ impl DjdbApp {
         let ds = self.dataset.as_ref().unwrap();
         let show = ds.shows.iter().find(|s| s.date == date);
         self.selected_show = Some(date);
+        let disk_hash = hash_file(&show_file_path(&self.data_dir, date));
         self.show_draft = show.map(|s| ShowDraft {
             date: s.date,
             sets: s.sets.iter().map(SetDraft::from_set).collect(),
             dirty: false,
+            disk_hash_at_load: disk_hash,
+            disk_changed: false,
+            conflict: false,
         });
+    }
+
+    fn recheck_draft_conflicts(&mut self) {
+        if let Some(draft) = self.show_draft.as_mut() {
+            let current = hash_file(&show_file_path(&self.data_dir, draft.date));
+            if current != draft.disk_hash_at_load {
+                draft.disk_changed = true;
+            }
+        }
+        if let Some(draft) = self.perf_draft.as_mut() {
+            let current = hash_file(&self.data_dir.join("performers.toml"));
+            if current != draft.disk_hash_at_load {
+                draft.disk_changed = true;
+            }
+        }
     }
 
     fn create_new_show(&mut self) {
@@ -403,6 +509,9 @@ impl DjdbApp {
             date,
             sets: Vec::new(),
             dirty: true,
+            disk_hash_at_load: None,
+            disk_changed: false,
+            conflict: false,
         });
         self.new_show_date.clear();
         self.set_ok(format!("drafting new show {date} (not yet saved)"));
@@ -429,6 +538,11 @@ impl DjdbApp {
             );
             if draft.dirty {
                 ui.label(RichText::new("(unsaved)").color(egui::Color32::YELLOW));
+            }
+            if draft.disk_changed {
+                ui.label(
+                    RichText::new("(disk changed)").color(egui::Color32::LIGHT_RED),
+                );
             }
         });
         ui.separator();
@@ -526,8 +640,9 @@ impl DjdbApp {
         ui.separator();
         let mut do_save = false;
         let mut do_revert = false;
+        let save_label = if draft.conflict { "Save anyway" } else { "Save" };
         ui.horizontal(|ui| {
-            if ui.button("Save").clicked() {
+            if ui.button(save_label).clicked() {
                 do_save = true;
             }
             if ui.button("Revert").clicked() {
@@ -535,7 +650,6 @@ impl DjdbApp {
             }
         });
 
-        // Recompute dirty flag from draft vs disk snapshot.
         if !draft.dirty {
             let current = draft_canon(&draft);
             let canon = disk_snapshot.as_ref().map(show_canon);
@@ -546,22 +660,17 @@ impl DjdbApp {
 
         self.show_draft = Some(draft);
 
-        // Now self is fully owned again. Perform actions.
         if do_save {
-            // Clone draft so we don't hold a borrow while reloading.
-            let draft = self.show_draft.as_ref().unwrap().clone();
-            match build_show_from_draft(&draft) {
-                Ok(show) => match save_show(&self.data_dir, &show) {
-                    Ok(()) => {
-                        self.set_ok(format!("saved {}", draft.date));
-                        if let Some(d) = self.show_draft.as_mut() {
-                            d.dirty = false;
-                        }
-                        self.reload();
-                    }
-                    Err(e) => self.set_err(format!("save failed: {e:#}")),
-                },
-                Err(e) => self.set_err(format!("cannot save: {e:#}")),
+            let force = self
+                .show_draft
+                .as_ref()
+                .map(|d| d.conflict)
+                .unwrap_or(false);
+            if let Err(msg) = self.try_save_show(force) {
+                self.set_err(msg);
+            } else {
+                let date = self.show_draft.as_ref().unwrap().date;
+                self.set_ok(format!("saved {date}"));
             }
         }
         if do_revert {
@@ -571,6 +680,110 @@ impl DjdbApp {
             }
         }
     }
+
+    fn try_save_show(&mut self, force: bool) -> Result<(), String> {
+        let draft = self.show_draft.as_ref().unwrap().clone();
+        let path = show_file_path(&self.data_dir, draft.date);
+
+        if !force {
+            // Conflict if the on-disk version no longer matches what we
+            // loaded. This also catches the "file was deleted under us"
+            // case since hash_file returns None in that case while we
+            // loaded with Some(_).
+            if let Some(loaded) = draft.disk_hash_at_load {
+                let current = hash_file(&path);
+                if current != Some(loaded) {
+                    if let Some(d) = self.show_draft.as_mut() {
+                        d.conflict = true;
+                        d.disk_changed = true;
+                    }
+                    return Err(format!(
+                        "{} changed on disk since you loaded it. Click \"Save anyway\" to overwrite, or Revert to discard your edits.",
+                        draft.date
+                    ));
+                }
+            }
+        }
+
+        let show = build_show_from_draft(&draft).map_err(|e| format!("cannot save: {e:#}"))?;
+        save_show(&self.data_dir, &show).map_err(|e| format!("save failed: {e:#}"))?;
+        let new_hash = hash_file(&path);
+        if let Some(d) = self.show_draft.as_mut() {
+            d.dirty = false;
+            d.conflict = false;
+            d.disk_changed = false;
+            d.disk_hash_at_load = new_hash;
+        }
+        self.reload();
+        Ok(())
+    }
+}
+
+fn show_file_path(data: &Path, date: NaiveDate) -> std::path::PathBuf {
+    data.join("shows").join(format!("{date}.toml"))
+}
+
+fn hash_file(path: &Path) -> Option<u64> {
+    use std::collections::hash_map::DefaultHasher;
+    use std::hash::{Hash, Hasher};
+    let bytes = std::fs::read(path).ok()?;
+    let mut h = DefaultHasher::new();
+    bytes.hash(&mut h);
+    Some(h.finish())
+}
+
+/// Pull recovery hints out of a DatasetError so the error screen can offer
+/// targeted actions instead of being a dead end.
+fn classify_load_error(e: &djdb::data::DatasetError, data_dir: &Path) -> LoadError {
+    use djdb::data::DatasetError;
+    use djdb::performer::PerformerError;
+    use djdb::show::ShowError;
+
+    let message = format!("{e:#}");
+    let (missing_slug, file_to_open) = match e {
+        DatasetError::UnknownPerformer { slug, date, .. } => (
+            Some(slug.clone()),
+            Some(show_file_path(data_dir, *date)),
+        ),
+        DatasetError::Show(ShowError::Parse { path, .. })
+        | DatasetError::Show(ShowError::Io { path, .. })
+        | DatasetError::Show(ShowError::DateFilenameMismatch { path, .. })
+        | DatasetError::Show(ShowError::BadFilename { path }) => {
+            (None, Some(PathBuf::from(path)))
+        }
+        DatasetError::Performer(PerformerError::Parse { path, .. })
+        | DatasetError::Performer(PerformerError::Io { path, .. }) => {
+            (None, Some(PathBuf::from(path)))
+        }
+        DatasetError::DuplicateShow { a, .. } => (None, Some(PathBuf::from(a))),
+        _ => (None, None),
+    };
+    LoadError {
+        message,
+        missing_slug,
+        file_to_open,
+    }
+}
+
+/// Open a file in the user's preferred external editor, using the OS's
+/// standard "open this path" mechanism.
+fn open_in_editor(path: &Path) -> std::io::Result<()> {
+    #[cfg(target_os = "linux")]
+    {
+        std::process::Command::new("xdg-open").arg(path).spawn()?;
+    }
+    #[cfg(target_os = "macos")]
+    {
+        std::process::Command::new("open").arg(path).spawn()?;
+    }
+    #[cfg(target_os = "windows")]
+    {
+        std::process::Command::new("cmd")
+            .args(["/C", "start", ""])
+            .arg(path)
+            .spawn()?;
+    }
+    Ok(())
 }
 
 fn draft_canon(draft: &ShowDraft) -> Vec<(String, String, String, String, String)> {
@@ -792,6 +1005,7 @@ impl DjdbApp {
         let ds = self.dataset.as_ref().unwrap();
         if let Some(p) = ds.performers.get(slug) {
             self.selected_perf = Some(slug.to_string());
+            let disk_hash = hash_file(&self.data_dir.join("performers.toml"));
             self.perf_draft = Some(PerformerDraft {
                 slug: slug.to_string(),
                 display_name: p.display_name.clone(),
@@ -800,6 +1014,9 @@ impl DjdbApp {
                 cdn: p.cdn.clone(),
                 notes: p.notes.clone(),
                 dirty: false,
+                disk_hash_at_load: disk_hash,
+                disk_changed: false,
+                conflict: false,
             });
         }
     }
@@ -864,6 +1081,11 @@ impl DjdbApp {
             ui.label(RichText::new(&draft.slug).color(egui::Color32::GRAY));
             if draft.dirty {
                 ui.label(RichText::new("(unsaved)").color(egui::Color32::YELLOW));
+            }
+            if draft.disk_changed {
+                ui.label(
+                    RichText::new("(disk changed)").color(egui::Color32::LIGHT_RED),
+                );
             }
         });
         ui.separator();
@@ -935,8 +1157,9 @@ impl DjdbApp {
         ui.separator();
         let mut do_save = false;
         let mut do_revert = false;
+        let save_label = if draft.conflict { "Save anyway" } else { "Save" };
         ui.horizontal(|ui| {
-            if ui.button("Save").clicked() {
+            if ui.button(save_label).clicked() {
                 do_save = true;
             }
             if ui.button("Revert").clicked() {
@@ -966,16 +1189,16 @@ impl DjdbApp {
         self.perf_draft = Some(draft);
 
         if do_save {
-            let draft = self.perf_draft.as_ref().unwrap().clone();
-            match self.save_perf_draft(&draft) {
-                Ok(()) => {
-                    self.set_ok(format!("saved {}", draft.slug));
-                    if let Some(d) = self.perf_draft.as_mut() {
-                        d.dirty = false;
-                    }
-                    self.reload();
-                }
-                Err(e) => self.set_err(format!("{e:#}")),
+            let force = self
+                .perf_draft
+                .as_ref()
+                .map(|d| d.conflict)
+                .unwrap_or(false);
+            if let Err(msg) = self.try_save_perf(force) {
+                self.set_err(msg);
+            } else {
+                let slug = self.perf_draft.as_ref().unwrap().slug.clone();
+                self.set_ok(format!("saved {slug}"));
             }
         }
         if do_revert {
@@ -983,6 +1206,37 @@ impl DjdbApp {
             self.load_perf_draft(&slug);
             self.set_ok("reverted");
         }
+    }
+
+    fn try_save_perf(&mut self, force: bool) -> Result<(), String> {
+        let draft = self.perf_draft.as_ref().unwrap().clone();
+        let perf_path = self.data_dir.join("performers.toml");
+
+        if !force {
+            if let Some(loaded) = draft.disk_hash_at_load {
+                let current = hash_file(&perf_path);
+                if current != Some(loaded) {
+                    if let Some(d) = self.perf_draft.as_mut() {
+                        d.conflict = true;
+                        d.disk_changed = true;
+                    }
+                    return Err(
+                        "performers.toml changed on disk since you loaded this entry. Click \"Save anyway\" to overwrite, or Revert to discard your edits.".to_string()
+                    );
+                }
+            }
+        }
+
+        self.save_perf_draft(&draft).map_err(|e| format!("{e:#}"))?;
+        let new_hash = hash_file(&perf_path);
+        if let Some(d) = self.perf_draft.as_mut() {
+            d.dirty = false;
+            d.conflict = false;
+            d.disk_changed = false;
+            d.disk_hash_at_load = new_hash;
+        }
+        self.reload();
+        Ok(())
     }
 
     fn save_perf_draft(&self, draft: &PerformerDraft) -> anyhow::Result<()> {
