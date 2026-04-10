@@ -138,7 +138,13 @@ struct DjdbApp {
     /// transitions so we can silently reload the dataset when the user
     /// returns from editing files elsewhere.
     prev_focused: bool,
+    /// When the Reset button was first clicked. If a second click arrives
+    /// within `RESET_ARM_WINDOW`, the reset executes. Otherwise the arm
+    /// expires and the first click has to be repeated.
+    reset_armed_at: Option<std::time::Instant>,
 }
+
+const RESET_ARM_WINDOW: std::time::Duration = std::time::Duration::from_secs(5);
 
 struct Toast {
     text: String,
@@ -220,6 +226,7 @@ impl DjdbApp {
             last_played_input: String::new(),
             toast: None,
             prev_focused: true,
+            reset_armed_at: None,
         };
         app.reload();
         app
@@ -280,9 +287,19 @@ impl eframe::App for DjdbApp {
             });
         });
 
+        let reset_armed = self
+            .reset_armed_at
+            .map(|t| t.elapsed() < RESET_ARM_WINDOW)
+            .unwrap_or(false);
+        let reset_label = if reset_armed {
+            "Really reset? (click again)"
+        } else {
+            "Reset changes"
+        };
+
+        let mut do_publish = false;
+        let mut do_reset = false;
         egui::TopBottomPanel::bottom("status").show(ctx, |ui| {
-            // Toast on top so it never fights the Publish button for
-            // horizontal space. Wrap long messages instead of clipping.
             if let Some(toast) = &self.toast {
                 let color = if toast.error {
                     egui::Color32::LIGHT_RED
@@ -291,10 +308,31 @@ impl eframe::App for DjdbApp {
                 };
                 ui.add(egui::Label::new(RichText::new(&toast.text).color(color)).wrap());
             }
-            if ui.button("Publish (git add + commit + push)").clicked() {
-                self.publish();
-            }
+            ui.horizontal(|ui| {
+                if ui.button("Publish (git add + commit + push)").clicked() {
+                    do_publish = true;
+                }
+                if ui.button(reset_label).clicked() {
+                    do_reset = true;
+                }
+            });
         });
+        if do_publish {
+            self.publish();
+        }
+        if do_reset {
+            if reset_armed {
+                self.execute_reset();
+            } else {
+                self.arm_reset(ctx);
+            }
+        }
+        // While armed, schedule a repaint so the button label reverts to
+        // "Reset changes" once the window expires even if there's no other
+        // input.
+        if self.reset_armed_at.is_some() {
+            ctx.request_repaint_after(RESET_ARM_WINDOW);
+        }
 
         if let Some(err) = self.load_error.clone() {
             let mut do_retry = false;
@@ -1395,11 +1433,47 @@ impl DjdbApp {
             Err(e) => self.set_err(format!("{e:#}")),
         }
     }
+
+    fn arm_reset(&mut self, ctx: &egui::Context) {
+        match git_status_preview(&self.data_dir) {
+            Ok(None) => {
+                self.set_ok("nothing to reset");
+            }
+            Ok(Some(preview)) => {
+                self.reset_armed_at = Some(std::time::Instant::now());
+                self.set_err(format!(
+                    "Reset will revert these changes and drop any unsaved drafts:\n{preview}\nClick \"Really reset?\" within 5s to confirm."
+                ));
+                ctx.request_repaint_after(RESET_ARM_WINDOW);
+            }
+            Err(e) => self.set_err(format!("git status failed: {e:#}")),
+        }
+    }
+
+    fn execute_reset(&mut self) {
+        match run_reset(&self.data_dir) {
+            Ok(()) => {
+                // Drafts and selections are all invalidated - the on-disk
+                // source of truth just jumped back to HEAD.
+                self.show_draft = None;
+                self.perf_draft = None;
+                self.selected_show = None;
+                self.selected_perf = None;
+                self.reset_armed_at = None;
+                self.reload();
+                self.set_ok("reset data/ to HEAD");
+            }
+            Err(e) => {
+                self.reset_armed_at = None;
+                self.set_err(format!("reset failed: {e:#}"));
+            }
+        }
+    }
 }
 
-fn run_publish(data_dir: &Path) -> anyhow::Result<String> {
+fn repo_root(data_dir: &Path) -> PathBuf {
     // Repo root = parent of data dir, unless data_dir is itself the root.
-    let repo_root = data_dir
+    data_dir
         .canonicalize()
         .ok()
         .and_then(|p| {
@@ -1409,11 +1483,15 @@ fn run_publish(data_dir: &Path) -> anyhow::Result<String> {
                 p.parent().map(|p| p.to_path_buf())
             }
         })
-        .unwrap_or_else(|| PathBuf::from("."));
+        .unwrap_or_else(|| PathBuf::from("."))
+}
+
+fn run_publish(data_dir: &Path) -> anyhow::Result<String> {
+    let root = repo_root(data_dir);
 
     let status = Command::new("git")
         .arg("-C")
-        .arg(&repo_root)
+        .arg(&root)
         .args(["status", "--porcelain", "--", "data"])
         .output()?;
     if !status.status.success() {
@@ -1426,13 +1504,51 @@ fn run_publish(data_dir: &Path) -> anyhow::Result<String> {
         return Ok("nothing to publish".into());
     }
 
-    run_git(&repo_root, &["add", "--", "data"])?;
-    run_git(
-        &repo_root,
-        &["commit", "-m", "Update lineup data from djdb-gui"],
-    )?;
-    run_git(&repo_root, &["push"])?;
+    run_git(&root, &["add", "--", "data"])?;
+    run_git(&root, &["commit", "-m", "Update lineup data from djdb-gui"])?;
+    run_git(&root, &["push"])?;
     Ok("published".into())
+}
+
+fn run_reset(data_dir: &Path) -> anyhow::Result<()> {
+    let root = repo_root(data_dir);
+    // Revert tracked-file changes (staged + unstaged) to HEAD.
+    run_git(
+        &root,
+        &["restore", "--source=HEAD", "--staged", "--worktree", "--", "data"],
+    )?;
+    // Remove untracked files and directories that only exist in data/.
+    run_git(&root, &["clean", "-fd", "--", "data"])?;
+    Ok(())
+}
+
+/// Return a human-readable preview of the changes a reset would revert,
+/// truncated to a handful of lines. Returns `Ok(None)` if there are no
+/// changes to reset.
+fn git_status_preview(data_dir: &Path) -> anyhow::Result<Option<String>> {
+    let root = repo_root(data_dir);
+    let out = Command::new("git")
+        .arg("-C")
+        .arg(&root)
+        .args(["status", "--porcelain", "--", "data"])
+        .output()?;
+    if !out.status.success() {
+        anyhow::bail!(
+            "git status: {}",
+            String::from_utf8_lossy(&out.stderr).trim()
+        );
+    }
+    let text = String::from_utf8_lossy(&out.stdout);
+    if text.is_empty() {
+        return Ok(None);
+    }
+    let lines: Vec<&str> = text.lines().collect();
+    let shown: Vec<&str> = lines.iter().take(5).copied().collect();
+    let mut preview = shown.join("\n");
+    if lines.len() > 5 {
+        preview.push_str(&format!("\n...+{} more", lines.len() - 5));
+    }
+    Ok(Some(preview))
 }
 
 fn run_git(cwd: &Path, args: &[&str]) -> anyhow::Result<()> {
