@@ -94,3 +94,19 @@ Status: done (stage reordered, ran before 2-4). 63 shows imported with
 layout; will be addressed manually. Known junk performer entries
 flagged for cleanup once `rename-performer` / merge commands land in
 stage 2.
+
+### Stage 6: desktop GUI (egui)
+
+`src/bin/djdb-gui.rs` behind an optional `gui` feature so CI / headless
+builds don't pay the eframe compile cost. Three tabs:
+
+- Shows: left-list + in-pane editor (time/dur/dj/vj/notes table, add/
+  remove, save, revert), plus "new show" date input.
+- Performers: left-list with filter + form editor (name, twitch, cdn,
+  aliases, notes) plus per-performer appearance history.
+- Queries: stale list with days slider, last-played lookup.
+
+Publish button runs `git add data/ && git commit && git push` so
+non-CLI Windows users can ship changes without opening a terminal.
+
+Status: done. Build with `cargo build --release --bin djdb-gui --features gui`.

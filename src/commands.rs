@@ -24,14 +24,14 @@ fn show_path(data: &Path, date: NaiveDate) -> PathBuf {
 
 // ---------- io helpers ----------
 
-fn save_performers(data: &Path, performers: &Performers) -> Result<()> {
+pub fn save_performers(data: &Path, performers: &Performers) -> Result<()> {
     let path = performers_path(data);
     let text = toml::to_string_pretty(performers).context("serializing performers")?;
     std::fs::write(&path, text).with_context(|| format!("writing {}", path.display()))?;
     Ok(())
 }
 
-fn save_show(data: &Path, show: &Show) -> Result<()> {
+pub fn save_show(data: &Path, show: &Show) -> Result<()> {
     let shows_dir = data.join("shows");
     std::fs::create_dir_all(&shows_dir)?;
     let path = show_path(data, show.date);
