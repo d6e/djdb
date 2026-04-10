@@ -10,6 +10,7 @@ use std::process::Command;
 
 use chrono::NaiveDate;
 use eframe::egui::{self, RichText};
+use egui_extras::{Column, TableBuilder};
 
 use djdb::commands::{self, save_performers, save_show};
 use djdb::data::Dataset;
@@ -381,45 +382,80 @@ impl DjdbApp {
         });
         ui.separator();
 
+        // Reserve space for the Save/Revert row + Add-set button below.
+        let table_height = (ui.available_height() - 80.0).max(100.0);
         egui::ScrollArea::vertical()
             .auto_shrink([false; 2])
-            .max_height(ui.available_height() - 80.0)
+            .max_height(table_height)
             .show(ui, |ui| {
-                egui::Grid::new("sets_grid")
-                    .num_columns(6)
+                TableBuilder::new(ui)
                     .striped(true)
-                    .spacing([8.0, 4.0])
-                    .show(ui, |ui| {
-                        ui.label(RichText::new("Time").strong());
-                        ui.label(RichText::new("Dur").strong());
-                        ui.label(RichText::new("DJ").strong());
-                        ui.label(RichText::new("VJ").strong());
-                        ui.label(RichText::new("Notes").strong());
-                        ui.label("");
-                        ui.end_row();
-
+                    .resizable(true)
+                    .cell_layout(egui::Layout::left_to_right(egui::Align::Center))
+                    .column(Column::exact(56.0))
+                    .column(Column::exact(48.0))
+                    .column(Column::initial(180.0).at_least(100.0).resizable(true))
+                    .column(Column::initial(180.0).at_least(100.0).resizable(true))
+                    .column(Column::remainder().at_least(160.0))
+                    .column(Column::exact(28.0))
+                    .header(22.0, |mut header| {
+                        header.col(|ui| {
+                            ui.label(RichText::new("Time").strong());
+                        });
+                        header.col(|ui| {
+                            ui.label(RichText::new("Dur").strong());
+                        });
+                        header.col(|ui| {
+                            ui.label(RichText::new("DJ").strong());
+                        });
+                        header.col(|ui| {
+                            ui.label(RichText::new("VJ").strong());
+                        });
+                        header.col(|ui| {
+                            ui.label(RichText::new("Notes").strong());
+                        });
+                        header.col(|_| {});
+                    })
+                    .body(|mut body| {
                         for (i, set) in draft.sets.iter_mut().enumerate() {
-                            ui.add(
-                                egui::TextEdit::singleline(&mut set.time)
-                                    .desired_width(48.0)
-                                    .id(egui::Id::new(("time", i))),
-                            );
-                            ui.add(
-                                egui::TextEdit::singleline(&mut set.duration)
-                                    .desired_width(40.0)
-                                    .id(egui::Id::new(("dur", i))),
-                            );
-                            slug_input(ui, &mut set.dj, &performers_snapshot, ("dj", i));
-                            slug_input(ui, &mut set.vj, &performers_snapshot, ("vj", i));
-                            ui.add(
-                                egui::TextEdit::singleline(&mut set.notes)
-                                    .desired_width(300.0)
-                                    .id(egui::Id::new(("notes", i))),
-                            );
-                            if ui.button("×").on_hover_text("remove this set").clicked() {
-                                set.mark_delete = true;
-                            }
-                            ui.end_row();
+                            body.row(26.0, |mut row| {
+                                row.col(|ui| {
+                                    ui.add(
+                                        egui::TextEdit::singleline(&mut set.time)
+                                            .desired_width(f32::INFINITY)
+                                            .id(egui::Id::new(("time", i))),
+                                    );
+                                });
+                                row.col(|ui| {
+                                    ui.add(
+                                        egui::TextEdit::singleline(&mut set.duration)
+                                            .desired_width(f32::INFINITY)
+                                            .id(egui::Id::new(("dur", i))),
+                                    );
+                                });
+                                row.col(|ui| {
+                                    slug_input(ui, &mut set.dj, &performers_snapshot, ("dj", i));
+                                });
+                                row.col(|ui| {
+                                    slug_input(ui, &mut set.vj, &performers_snapshot, ("vj", i));
+                                });
+                                row.col(|ui| {
+                                    ui.add(
+                                        egui::TextEdit::singleline(&mut set.notes)
+                                            .desired_width(f32::INFINITY)
+                                            .id(egui::Id::new(("notes", i))),
+                                    );
+                                });
+                                row.col(|ui| {
+                                    if ui
+                                        .button("×")
+                                        .on_hover_text("remove this set")
+                                        .clicked()
+                                    {
+                                        set.mark_delete = true;
+                                    }
+                                });
+                            });
                         }
                     });
 
@@ -577,6 +613,7 @@ fn non_empty(s: &str) -> Option<String> {
 }
 
 /// Text input for a slug with a colored edge indicating whether it resolves.
+/// Uses all available width (intended for use inside a TableBuilder cell).
 fn slug_input(
     ui: &mut egui::Ui,
     value: &mut String,
@@ -593,7 +630,7 @@ fn slug_input(
     };
     ui.add(
         egui::TextEdit::singleline(value)
-            .desired_width(120.0)
+            .desired_width(f32::INFINITY)
             .id(egui::Id::new(id))
             .text_color(color),
     );
