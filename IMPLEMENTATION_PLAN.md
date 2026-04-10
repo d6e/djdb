@@ -73,7 +73,10 @@ deploy `docs/` via `actions/deploy-pages`.
 
 Success criteria: push triggers a successful deploy.
 
-Status: not started.
+Status: done. `.github/workflows/build.yml` runs tests, validates data,
+computes base URL (detects user vs project site), builds, and deploys
+via actions/deploy-pages. Awaiting first push + manual Pages enablement
+in repo settings to verify live.
 
 ### Stage 5: xlsx importer
 
