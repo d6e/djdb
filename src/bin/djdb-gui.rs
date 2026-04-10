@@ -14,7 +14,7 @@ use egui_extras::{Column, TableBuilder};
 
 use djdb::commands::{self, save_performers, save_show};
 use djdb::data::Dataset;
-use djdb::performer::{Performers, is_valid_slug};
+use djdb::performer::{Performer, Performers, is_valid_slug};
 use djdb::show::{Set, Show, WallTime};
 
 fn main() -> eframe::Result<()> {
@@ -985,25 +985,59 @@ impl DjdbApp {
 
         ui.collapsing("Last played", |ui| {
             ui.horizontal(|ui| {
-                ui.label("Slug:");
+                ui.label("Search:");
                 ui.text_edit_singleline(&mut self.last_played_input);
             });
-            let slug = self.last_played_input.trim();
-            if !slug.is_empty() {
-                if !ds.performers.contains(slug) {
-                    ui.label(RichText::new("(not a performer)").color(egui::Color32::LIGHT_RED));
-                } else {
-                    let last = commands::last_played_map(ds).get(slug).copied();
-                    match last {
-                        Some(d) => {
-                            let ago = (today - d).num_days();
-                            ui.label(format!("{d} ({ago} days ago)"));
-                        }
-                        None => {
-                            ui.label("never");
-                        }
-                    }
-                }
+            let query = self.last_played_input.trim().to_lowercase();
+            if !query.is_empty() {
+                let last_map = commands::last_played_map(ds);
+                let mut matches: Vec<(&String, &Performer, Option<NaiveDate>)> = ds
+                    .performers
+                    .0
+                    .iter()
+                    .filter(|(slug, p)| {
+                        slug.to_lowercase().contains(&query)
+                            || p.display_name.to_lowercase().contains(&query)
+                            || p
+                                .aliases
+                                .iter()
+                                .any(|a| a.to_lowercase().contains(&query))
+                    })
+                    .map(|(slug, p)| (slug, p, last_map.get(slug).copied()))
+                    .collect();
+                // Most recently played first, never-played last.
+                matches.sort_by(|a, b| match (a.2, b.2) {
+                    (Some(ad), Some(bd)) => bd.cmp(&ad),
+                    (Some(_), None) => std::cmp::Ordering::Less,
+                    (None, Some(_)) => std::cmp::Ordering::Greater,
+                    (None, None) => a.0.cmp(b.0),
+                });
+
+                ui.label(format!("{} match(es)", matches.len()));
+                egui::ScrollArea::vertical()
+                    .id_salt("lp_scroll")
+                    .max_height(260.0)
+                    .show(ui, |ui| {
+                        egui::Grid::new("lp_grid")
+                            .num_columns(3)
+                            .striped(true)
+                            .show(ui, |ui| {
+                                for (slug, p, last) in matches {
+                                    ui.label(&p.display_name);
+                                    ui.label(RichText::new(slug).color(egui::Color32::GRAY));
+                                    match last {
+                                        Some(d) => {
+                                            let ago = (today - d).num_days();
+                                            ui.label(format!("{d} ({ago}d ago)"));
+                                        }
+                                        None => {
+                                            ui.label("never");
+                                        }
+                                    }
+                                    ui.end_row();
+                                }
+                            });
+                    });
             }
         });
 
