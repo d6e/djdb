@@ -241,20 +241,19 @@ impl eframe::App for DjdbApp {
         });
 
         egui::TopBottomPanel::bottom("status").show(ctx, |ui| {
-            ui.horizontal(|ui| {
-                if ui.button("Publish (git add + commit + push)").clicked() {
-                    self.publish();
-                }
-                ui.separator();
-                if let Some(toast) = &self.toast {
-                    let color = if toast.error {
-                        egui::Color32::LIGHT_RED
-                    } else {
-                        egui::Color32::LIGHT_GREEN
-                    };
-                    ui.label(RichText::new(&toast.text).color(color));
-                }
-            });
+            // Toast on top so it never fights the Publish button for
+            // horizontal space. Wrap long messages instead of clipping.
+            if let Some(toast) = &self.toast {
+                let color = if toast.error {
+                    egui::Color32::LIGHT_RED
+                } else {
+                    egui::Color32::LIGHT_GREEN
+                };
+                ui.add(egui::Label::new(RichText::new(&toast.text).color(color)).wrap());
+            }
+            if ui.button("Publish (git add + commit + push)").clicked() {
+                self.publish();
+            }
         });
 
         if let Some(err) = self.load_error.clone() {
