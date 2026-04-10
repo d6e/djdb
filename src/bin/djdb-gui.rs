@@ -309,10 +309,18 @@ impl eframe::App for DjdbApp {
                 ui.add(egui::Label::new(RichText::new(&toast.text).color(color)).wrap());
             }
             ui.horizontal(|ui| {
-                if ui.button("Publish (git add + commit + push)").clicked() {
+                if ui
+                    .button("Publish")
+                    .on_hover_text("git add + commit + push on data/")
+                    .clicked()
+                {
                     do_publish = true;
                 }
-                if ui.button(reset_label).clicked() {
+                if ui
+                    .button(reset_label)
+                    .on_hover_text("git restore + git clean on data/ (discard all uncommitted changes)")
+                    .clicked()
+                {
                     do_reset = true;
                 }
             });
