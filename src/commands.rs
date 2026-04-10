@@ -280,6 +280,105 @@ pub fn merge_performer(data: &Path, from: &str, into: &str) -> Result<()> {
     Ok(())
 }
 
+// ---------- drop-performer ----------
+
+/// Remove a performer from the registry and cascade-clean every set that
+/// referenced it. Sets that would be left with neither dj nor vj are
+/// deleted; shows that would be left with no sets are deleted entirely.
+pub fn drop_performer(data: &Path, slug: &str) -> Result<()> {
+    let ds = Dataset::load(data)?;
+    let Dataset {
+        mut performers,
+        shows,
+    } = ds;
+
+    if performers.0.remove(slug).is_none() {
+        bail!("performer {slug:?} not found");
+    }
+
+    let mut sets_cleared = 0usize;
+    let mut sets_removed = 0usize;
+    let mut shows_deleted = 0usize;
+    for mut show in shows {
+        let orig_len = show.sets.len();
+        let mut touched = false;
+        show.sets.retain_mut(|set| {
+            let dj_match = set.dj.as_deref() == Some(slug);
+            let vj_match = set.vj.as_deref() == Some(slug);
+            if !dj_match && !vj_match {
+                return true;
+            }
+            touched = true;
+            if dj_match {
+                set.dj = None;
+            }
+            if vj_match {
+                set.vj = None;
+            }
+            if set.dj.is_some() || set.vj.is_some() {
+                sets_cleared += 1;
+                true
+            } else {
+                false
+            }
+        });
+        sets_removed += orig_len - show.sets.len();
+
+        if !touched {
+            continue;
+        }
+        let path = show_path(data, show.date);
+        if show.sets.is_empty() {
+            std::fs::remove_file(&path)
+                .with_context(|| format!("removing {}", path.display()))?;
+            shows_deleted += 1;
+        } else {
+            save_show(data, &show)?;
+        }
+    }
+
+    save_performers(data, &performers)?;
+    eprintln!(
+        "dropped {slug} ({sets_cleared} sets cleared, {sets_removed} sets removed, {shows_deleted} shows deleted)"
+    );
+    Ok(())
+}
+
+// ---------- edit-performer ----------
+
+pub struct EditPerformerArgs<'a> {
+    pub slug: &'a str,
+    pub name: Option<&'a str>,
+    pub twitch: Option<&'a str>,
+    pub cdn: Option<&'a str>,
+    pub notes: Option<&'a str>,
+}
+
+pub fn edit_performer(data: &Path, args: EditPerformerArgs<'_>) -> Result<()> {
+    let mut performers = load_performers(data)?;
+    let p = performers
+        .0
+        .get_mut(args.slug)
+        .ok_or_else(|| anyhow!("performer {:?} not found", args.slug))?;
+    if let Some(name) = args.name {
+        if name.trim().is_empty() {
+            bail!("--name must not be empty");
+        }
+        p.display_name = name.trim().to_string();
+    }
+    if let Some(twitch) = args.twitch {
+        p.twitch = twitch.to_string();
+    }
+    if let Some(cdn) = args.cdn {
+        p.cdn = cdn.to_string();
+    }
+    if let Some(notes) = args.notes {
+        p.notes = notes.to_string();
+    }
+    save_performers(data, &performers)?;
+    Ok(())
+}
+
 // ---------- queries ----------
 
 /// Map of slug -> most recent show date on which they played (dj or vj).
@@ -563,6 +662,97 @@ dj = "{dj}"
                 assert_ne!(set.dj.as_deref(), Some("turels"));
             }
         }
+    }
+
+    #[test]
+    fn drop_performer_clears_vj_field() {
+        let dir = tempdir().unwrap();
+        setup(dir.path());
+        // kohada is DJ, turels is VJ in the same set.
+        std::fs::write(
+            dir.path().join("shows/2026-05-09.toml"),
+            r#"date = "2026-05-09"
+
+[[sets]]
+start = "21:00"
+dj = "kohada"
+vj = "turels"
+"#,
+        )
+        .unwrap();
+        drop_performer(dir.path(), "turels").unwrap();
+        let ds = Dataset::load(dir.path()).unwrap();
+        assert!(!ds.performers.contains("turels"));
+        assert_eq!(ds.shows.len(), 1);
+        assert_eq!(ds.shows[0].sets.len(), 1);
+        assert_eq!(ds.shows[0].sets[0].dj.as_deref(), Some("kohada"));
+        assert!(ds.shows[0].sets[0].vj.is_none());
+    }
+
+    #[test]
+    fn drop_performer_removes_set_when_sole_role() {
+        let dir = tempdir().unwrap();
+        setup(dir.path());
+        std::fs::write(
+            dir.path().join("shows/2026-05-09.toml"),
+            r#"date = "2026-05-09"
+
+[[sets]]
+start = "21:00"
+dj = "kohada"
+
+[[sets]]
+start = "22:00"
+dj = "turels"
+"#,
+        )
+        .unwrap();
+        drop_performer(dir.path(), "turels").unwrap();
+        let ds = Dataset::load(dir.path()).unwrap();
+        assert_eq!(ds.shows.len(), 1);
+        assert_eq!(ds.shows[0].sets.len(), 1);
+        assert_eq!(ds.shows[0].sets[0].dj.as_deref(), Some("kohada"));
+    }
+
+    #[test]
+    fn drop_performer_deletes_show_when_all_sets_go() {
+        let dir = tempdir().unwrap();
+        setup(dir.path());
+        show_with_set(dir.path(), "2026-05-09", "21:00", "turels");
+        drop_performer(dir.path(), "turels").unwrap();
+        assert!(!dir.path().join("shows/2026-05-09.toml").exists());
+        let ds = Dataset::load(dir.path()).unwrap();
+        assert_eq!(ds.shows.len(), 0);
+    }
+
+    #[test]
+    fn drop_performer_rejects_unknown() {
+        let dir = tempdir().unwrap();
+        setup(dir.path());
+        let err = drop_performer(dir.path(), "ghost").unwrap_err();
+        assert!(err.to_string().contains("not found"));
+    }
+
+    #[test]
+    fn edit_performer_updates_fields() {
+        let dir = tempdir().unwrap();
+        setup(dir.path());
+        edit_performer(
+            dir.path(),
+            EditPerformerArgs {
+                slug: "aliquem",
+                name: Some("Aliquem DJ"),
+                twitch: Some("https://twitch.tv/aliquem"),
+                cdn: Some("rtspt://cdn/aliquem"),
+                notes: None,
+            },
+        )
+        .unwrap();
+        let p = load_performers(dir.path()).unwrap();
+        let a = p.get("aliquem").unwrap();
+        assert_eq!(a.display_name, "Aliquem DJ");
+        assert_eq!(a.twitch, "https://twitch.tv/aliquem");
+        assert_eq!(a.cdn, "rtspt://cdn/aliquem");
     }
 
     #[test]

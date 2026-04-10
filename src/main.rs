@@ -4,7 +4,7 @@ use std::process::ExitCode;
 use chrono::NaiveDate;
 use clap::{Parser, Subcommand};
 
-use djdb::commands::{self, AddSetArgs, NewPerformerArgs};
+use djdb::commands::{self, AddSetArgs, EditPerformerArgs, NewPerformerArgs};
 use djdb::data::Dataset;
 use djdb::import::{build_plan, write_plan};
 use djdb::show::WallTime;
@@ -61,10 +61,26 @@ enum Command {
         #[arg(long = "alias")]
         aliases: Vec<String>,
     },
+    /// Update fields on an existing performer. Pass only the flags you
+    /// want to change; others are left alone.
+    EditPerformer {
+        slug: String,
+        #[arg(long)]
+        name: Option<String>,
+        #[arg(long)]
+        twitch: Option<String>,
+        #[arg(long)]
+        cdn: Option<String>,
+        #[arg(long)]
+        notes: Option<String>,
+    },
     /// Rename a performer everywhere.
     RenamePerformer { old: String, new: String },
     /// Merge one performer into another, folding aliases and rewriting sets.
     MergePerformer { from: String, into: String },
+    /// Remove a performer and cascade-clean every set that referenced
+    /// them. Sets left empty get removed; shows left empty get deleted.
+    DropPerformer { slug: String },
     /// Show the most recent date a performer played.
     LastPlayed { slug: String },
     /// List performers not seen recently (or never).
@@ -165,12 +181,33 @@ fn run(cli: Cli) -> anyhow::Result<()> {
             println!("created performer {slug}");
             Ok(())
         }
+        Command::EditPerformer {
+            slug,
+            name,
+            twitch,
+            cdn,
+            notes,
+        } => {
+            commands::edit_performer(
+                &cli.data,
+                EditPerformerArgs {
+                    slug: &slug,
+                    name: name.as_deref(),
+                    twitch: twitch.as_deref(),
+                    cdn: cdn.as_deref(),
+                    notes: notes.as_deref(),
+                },
+            )?;
+            println!("updated {slug}");
+            Ok(())
+        }
         Command::RenamePerformer { old, new } => {
             commands::rename_performer(&cli.data, &old, &new)
         }
         Command::MergePerformer { from, into } => {
             commands::merge_performer(&cli.data, &from, &into)
         }
+        Command::DropPerformer { slug } => commands::drop_performer(&cli.data, &slug),
         Command::LastPlayed { slug } => {
             match commands::last_played(&cli.data, &slug)? {
                 Some(d) => println!("{slug}: {d}"),
