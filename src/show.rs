@@ -7,6 +7,11 @@ use thiserror::Error;
 use crate::performer::Slug;
 
 /// Wall-clock time on the show's ET date, as `HH:MM`.
+///
+/// Hours may be 0..=47 to represent late-night sets that run past midnight
+/// (Japanese-style 24h+ notation: `25:00` = 1am the day after the show date,
+/// rendered in ET). This lets a single show file group an entire overnight
+/// lineup under one ET calendar date without ambiguity.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct WallTime {
     pub hour: u8,
@@ -24,7 +29,7 @@ impl WallTime {
         let minute: u8 = m
             .parse()
             .map_err(|_| ShowError::BadTime { value: s.to_string() })?;
-        if hour > 23 || minute > 59 {
+        if hour > 47 || minute > 59 {
             return Err(ShowError::BadTime { value: s.to_string() });
         }
         Ok(WallTime { hour, minute })
@@ -49,18 +54,22 @@ impl<'de> Deserialize<'de> for WallTime {
 pub struct Set {
     pub start: WallTime,
     /// Duration in minutes. Defaults to 60 when omitted.
-    #[serde(default = "default_duration")]
+    #[serde(default = "default_duration", skip_serializing_if = "is_default_duration")]
     pub duration_min: u32,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub dj: Option<Slug>,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub vj: Option<Slug>,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "String::is_empty")]
     pub notes: String,
 }
 
 fn default_duration() -> u32 {
     60
+}
+
+fn is_default_duration(d: &u32) -> bool {
+    *d == 60
 }
 
 /// A single night's lineup. `date` is the ET calendar date.
@@ -108,18 +117,32 @@ impl Show {
             source,
         })?;
 
-        // Filename must match internal date.
+        // Filename must match internal date. Require strict `YYYY-MM-DD`
+        // shape before handing to chrono, which otherwise accepts variable
+        // padding (`2025-3-8`), signed years (`+2025-03-28`), etc.
         let stem = path
             .file_stem()
             .and_then(|s| s.to_str())
             .ok_or_else(|| ShowError::BadFilename {
                 path: path.display().to_string(),
             })?;
-        let filename_date = NaiveDate::parse_from_str(stem, "%Y-%m-%d").map_err(|_| {
-            ShowError::BadFilename {
-                path: path.display().to_string(),
-            }
-        })?;
+        let bad_filename = || ShowError::BadFilename {
+            path: path.display().to_string(),
+        };
+        let bytes = stem.as_bytes();
+        if bytes.len() != 10 || bytes[4] != b'-' || bytes[7] != b'-' {
+            return Err(bad_filename());
+        }
+        if !bytes[..4]
+            .iter()
+            .chain(&bytes[5..7])
+            .chain(&bytes[8..10])
+            .all(|c| c.is_ascii_digit())
+        {
+            return Err(bad_filename());
+        }
+        let filename_date =
+            NaiveDate::parse_from_str(stem, "%Y-%m-%d").map_err(|_| bad_filename())?;
         if filename_date != show.date {
             return Err(ShowError::DateFilenameMismatch {
                 path: path.display().to_string(),
@@ -136,7 +159,13 @@ impl Show {
             return Err(ShowError::EmptyLineup { date: self.date });
         }
         for set in &self.sets {
-            if set.dj.is_none() && set.vj.is_none() {
+            // Treat `dj = ""` / `vj = ""` the same as missing: TOML has no
+            // null, so an empty string is the only way to "omit" a value in
+            // place, and we must not let it silently survive shape validation
+            // only to blow up later as an `UnknownPerformer { slug: "" }`.
+            let dj_present = set.dj.as_deref().is_some_and(|s| !s.is_empty());
+            let vj_present = set.vj.as_deref().is_some_and(|s| !s.is_empty());
+            if !dj_present && !vj_present {
                 return Err(ShowError::EmptySet {
                     date: self.date,
                     time: format!("{:02}:{:02}", set.start.hour, set.start.minute),
@@ -158,8 +187,20 @@ mod tests {
     }
 
     #[test]
+    fn overnight_walltime() {
+        assert_eq!(
+            WallTime::parse("25:00").unwrap(),
+            WallTime { hour: 25, minute: 0 }
+        );
+        assert_eq!(
+            WallTime::parse("30:30").unwrap(),
+            WallTime { hour: 30, minute: 30 }
+        );
+    }
+
+    #[test]
     fn bad_walltime() {
-        assert!(WallTime::parse("24:00").is_err());
+        assert!(WallTime::parse("48:00").is_err());
         assert!(WallTime::parse("12:60").is_err());
         assert!(WallTime::parse("1200").is_err());
         assert!(WallTime::parse("abc").is_err());
@@ -202,6 +243,35 @@ start = "20:00"
 "#;
         let s: Show = toml::from_str(text).unwrap();
         assert!(matches!(s.validate_shape(), Err(ShowError::EmptySet { .. })));
+    }
+
+    #[test]
+    fn empty_string_dj_rejected() {
+        // TOML has no null, so `dj = ""` is the only way to "omit" a value
+        // in-place. It must be treated as missing, not as a present slug.
+        let text = r#"
+date = "2025-03-28"
+
+[[sets]]
+start = "20:00"
+dj = ""
+"#;
+        let s: Show = toml::from_str(text).unwrap();
+        assert!(matches!(s.validate_shape(), Err(ShowError::EmptySet { .. })));
+    }
+
+    #[test]
+    fn empty_string_dj_with_vj_ok() {
+        let text = r#"
+date = "2025-03-28"
+
+[[sets]]
+start = "20:00"
+dj = ""
+vj = "someone"
+"#;
+        let s: Show = toml::from_str(text).unwrap();
+        s.validate_shape().unwrap();
     }
 
     #[test]

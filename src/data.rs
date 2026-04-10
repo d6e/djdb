@@ -82,12 +82,16 @@ impl Dataset {
         // Cross-validate performer references.
         for (_, show) in &shows {
             for set in &show.sets {
-                for slug in [set.dj.as_ref(), set.vj.as_ref()].into_iter().flatten() {
+                for slug in [set.dj.as_deref(), set.vj.as_deref()]
+                    .into_iter()
+                    .flatten()
+                    .filter(|s| !s.is_empty())
+                {
                     if !performers.contains(slug) {
                         return Err(DatasetError::UnknownPerformer {
                             date: show.date,
                             time: format!("{:02}:{:02}", set.start.hour, set.start.minute),
-                            slug: slug.clone(),
+                            slug: slug.to_string(),
                         });
                     }
                 }
@@ -202,6 +206,37 @@ dj = "aliquem"
         assert!(matches!(
             err,
             DatasetError::Show(ShowError::DateFilenameMismatch { .. })
+        ));
+    }
+
+    #[test]
+    fn rejects_noncanonical_filename_date() {
+        // `2025-3-28.toml` parses fine under chrono's `%Y-%m-%d` but is not a
+        // canonical `YYYY-MM-DD` filename. It must be rejected up front.
+        let dir = tempdir().unwrap();
+        write(
+            dir.path(),
+            "performers.toml",
+            r#"
+[aliquem]
+display_name = "Aliquem"
+"#,
+        );
+        write(
+            dir.path(),
+            "shows/2025-3-28.toml",
+            r#"
+date = "2025-03-28"
+
+[[sets]]
+start = "20:00"
+dj = "aliquem"
+"#,
+        );
+        let err = Dataset::load(dir.path()).unwrap_err();
+        assert!(matches!(
+            err,
+            DatasetError::Show(ShowError::BadFilename { .. })
         ));
     }
 

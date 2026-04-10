@@ -5,9 +5,11 @@ edition = "2024"
 
 [dependencies]
 anyhow = "1"
+calamine = { version = "0.30", features = ["dates"] }
 chrono = { version = "0.4", features = ["serde"] }
 chrono-tz = "0.10"
 clap = { version = "4", features = ["derive"] }
+deunicode = "1"
 serde = { version = "1", features = ["derive"] }
 thiserror = "2"
 toml = "0.8"
