@@ -73,6 +73,15 @@ enum Command {
         #[arg(long, default_value_t = 60)]
         days: i64,
     },
+    /// Build the static site into `docs/`.
+    Build {
+        /// Output directory.
+        #[arg(long, default_value = "docs")]
+        out: PathBuf,
+        /// URL prefix for links (use `/djdb/` for a GitHub project site).
+        #[arg(long, default_value = "/")]
+        base_url: String,
+    },
     /// Import from a legacy Google Sheets .xlsx workbook.
     Import {
         /// Path to the .xlsx file.
@@ -186,6 +195,21 @@ fn run(cli: Cli) -> anyhow::Result<()> {
                     }
                 }
             }
+            Ok(())
+        }
+        Command::Build { out, base_url } => {
+            let ds = Dataset::load(&cli.data)?;
+            let cfg = djdb::site::BuildConfig {
+                base_url,
+                today: chrono::Local::now().date_naive(),
+            };
+            djdb::site::build(&ds, &cfg, &out)?;
+            println!(
+                "built {} shows + {} performers to {}",
+                ds.shows.len(),
+                ds.performers.0.len(),
+                out.display()
+            );
             Ok(())
         }
         Command::Import {

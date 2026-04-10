@@ -60,7 +60,11 @@ Success criteria:
 - DST transition dates produce correct ET/JST offsets (test both spring and
   fall transitions).
 
-Status: not started.
+Status: done. Maud templates, dark styled CSS, 6 tests covering
+ET/JST conversion in EST + EDT + spring-forward gap + fall-back
+ambiguity, plus a full build-to-tempdir test. Real build produces
+63 show pages + 360 performer pages + 2 indexes + landing, matching
+the source screenshots exactly.
 
 ### Stage 4: GitHub Actions + Pages deploy
 
