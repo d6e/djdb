@@ -35,8 +35,37 @@ fn main() -> eframe::Result<()> {
     eframe::run_native(
         "djdb",
         options,
-        Box::new(move |_cc| Ok(Box::new(DjdbApp::new(data_dir)))),
+        Box::new(move |cc| {
+            install_cjk_font(&cc.egui_ctx);
+            Ok(Box::new(DjdbApp::new(data_dir)))
+        }),
     )
+}
+
+/// Register a bundled Japanese font as a fallback so performer names with
+/// kana/kanji (e.g. `とかげ／Tokage`) render correctly. The font is embedded
+/// at compile time, making the binary self-contained and independent of
+/// whatever fonts happen to be installed on the user's machine.
+fn install_cjk_font(ctx: &egui::Context) {
+    const NOTO_SANS_JP: &[u8] =
+        include_bytes!("../../assets/fonts/NotoSansJP-Regular.ttf");
+    let mut fonts = egui::FontDefinitions::default();
+    fonts
+        .font_data
+        .insert("jp".into(), egui::FontData::from_static(NOTO_SANS_JP));
+    // Append after the default font so Latin text keeps egui's bundled
+    // font and CJK characters fall through to Noto.
+    fonts
+        .families
+        .entry(egui::FontFamily::Proportional)
+        .or_default()
+        .push("jp".into());
+    fonts
+        .families
+        .entry(egui::FontFamily::Monospace)
+        .or_default()
+        .push("jp".into());
+    ctx.set_fonts(fonts);
 }
 
 /// Walk upward from the current working directory and from the binary's
