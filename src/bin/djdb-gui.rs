@@ -922,27 +922,95 @@ fn non_empty(s: &str) -> Option<String> {
     if t.is_empty() { None } else { Some(t.to_string()) }
 }
 
-/// Text input for a slug with a colored edge indicating whether it resolves.
-/// Uses all available width (intended for use inside a TableBuilder cell).
+/// Text input for a slug with a colored edge indicating whether it
+/// resolves, plus a popup autocomplete that matches against slug, display
+/// name, and aliases. Click a match to accept it. Uses all available width.
 fn slug_input(
     ui: &mut egui::Ui,
     value: &mut String,
     performers: &Performers,
-    id: impl std::hash::Hash,
+    id: impl std::hash::Hash + Copy,
 ) {
-    let known = value.trim().is_empty() || performers.contains(value.trim());
-    let color = if value.trim().is_empty() {
+    let trimmed = value.trim();
+    let known = trimmed.is_empty() || performers.contains(trimmed);
+    let color = if trimmed.is_empty() {
         egui::Color32::GRAY
     } else if known {
         egui::Color32::LIGHT_GREEN
     } else {
         egui::Color32::LIGHT_RED
     };
-    ui.add(
+    let text_id = egui::Id::new(("slug_text", id));
+    let popup_id = egui::Id::new(("slug_popup", id));
+
+    let resp = ui.add(
         egui::TextEdit::singleline(value)
             .desired_width(f32::INFINITY)
-            .id(egui::Id::new(id))
+            .id(text_id)
             .text_color(color),
+    );
+
+    // Open the popup on focus or as soon as something is typed; hide it
+    // when the field is empty or focus is lost by a click outside.
+    if resp.changed() || resp.gained_focus() {
+        if value.trim().is_empty() {
+            ui.memory_mut(|m| m.close_popup());
+        } else {
+            ui.memory_mut(|m| m.open_popup(popup_id));
+        }
+    }
+
+    // Collect matches once, up front, so we can early-out if there are none
+    // (which suppresses an empty popup box).
+    let query = value.trim().to_lowercase();
+    let matches: Vec<(&String, &Performer)> = if query.is_empty() {
+        Vec::new()
+    } else {
+        let mut out: Vec<(&String, &Performer)> = performers
+            .0
+            .iter()
+            .filter(|(slug, p)| {
+                slug.to_lowercase().contains(&query)
+                    || p.display_name.to_lowercase().contains(&query)
+                    || p.aliases.iter().any(|a| a.to_lowercase().contains(&query))
+            })
+            .collect();
+        // Prefer prefix matches on the slug or display name.
+        out.sort_by_key(|(slug, p)| {
+            let slug_lc = slug.to_lowercase();
+            let name_lc = p.display_name.to_lowercase();
+            let exact = slug_lc == query || name_lc == query;
+            let prefix = slug_lc.starts_with(&query) || name_lc.starts_with(&query);
+            // Lower key sorts first: exact > prefix > anything else.
+            (!exact, !prefix, (*slug).clone())
+        });
+        out.truncate(12);
+        out
+    };
+
+    if matches.is_empty() {
+        return;
+    }
+
+    egui::popup::popup_below_widget(
+        ui,
+        popup_id,
+        &resp,
+        egui::PopupCloseBehavior::CloseOnClickOutside,
+        |ui| {
+            ui.set_min_width(240.0);
+            for (slug, p) in &matches {
+                let label = if p.display_name == **slug {
+                    (*slug).clone()
+                } else {
+                    format!("{}  ({})", p.display_name, slug)
+                };
+                if ui.selectable_label(false, label).clicked() {
+                    *value = (*slug).clone();
+                    ui.memory_mut(|m| m.close_popup());
+                }
+            }
+        },
     );
 }
 
