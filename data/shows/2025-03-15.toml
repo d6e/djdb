@@ -36,7 +36,6 @@ notes = "rtspt://stream.vrcdn.live/live/taisai"
 [[sets]]
 start = "28:00"
 dj = "tamagomago"
-vj = "video_use"
 notes = "rtspt://stream.vrcdn.live/live/tamagomago"
 
 [[sets]]

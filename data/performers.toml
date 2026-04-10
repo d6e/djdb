@@ -71,6 +71,10 @@ display_name = "Atkom"
 [atogasaki]
 display_name = "ATOGASAKI"
 
+[atomicpeach]
+display_name = "atomicpeach"
+cdn = "rtspt://stream.vrcdn.live/live/atomicpeach"
+
 [atri]
 display_name = "Atri"
 
@@ -452,9 +456,6 @@ display_name = "Kai & Steph"
 [kale]
 display_name = "Kale"
 
-[kaleidosky_provided]
-display_name = "Kaleidosky Provided"
-
 [kamicircle]
 display_name = "KAMIcircle"
 
@@ -550,9 +551,6 @@ display_name = "Lili"
 [loser4dim]
 display_name = "loser4dim"
 
-[lost_takeover_bastet_to_book_vj_keno]
-display_name = "LOST takeover.. Bastet to book...VJ Keno"
-
 [loveleemusic]
 display_name = "LoveLeeMusic"
 
@@ -616,9 +614,6 @@ display_name = "Moonglow"
 [murdokes]
 display_name = "Murdokes"
 
-[n]
-display_name = "n"
-
 [najdorf]
 display_name = "Najdorf"
 
@@ -649,9 +644,6 @@ display_name = "Nin"
 [ninepearlfangs]
 display_name = "NinePearlFangs"
 
-[none]
-display_name = "None"
-
 [nyaaa]
 display_name = "Nyaaa"
 
@@ -666,9 +658,6 @@ display_name = "oofy"
 
 [oofy_exe]
 display_name = "oofy_exe"
-
-[open_deck]
-display_name = "Open Deck"
 
 [oreovix]
 display_name = "OreoVix"
@@ -728,6 +717,10 @@ display_name = "Rabbitex"
 [rain]
 display_name = "Rain"
 
+[rainiwa]
+display_name = "rainiwa"
+cdn = "rtspt://stream.vrcdn.live/live/rainiwa"
+
 [reflexii]
 display_name = "RefleXII"
 
@@ -739,18 +732,6 @@ display_name = "RNCH"
 
 [robiniki]
 display_name = "Robiniki"
-
-[rtspt_stream_vrcdn_live_live_atomicpeach]
-display_name = "rtspt://stream.vrcdn.live/live/atomicpeach"
-
-[rtspt_stream_vrcdn_live_live_rainiwa]
-display_name = "rtspt://stream.vrcdn.live/live/rainiwa"
-
-[rtspt_stream_vrcdn_live_live_shengaero]
-display_name = "rtspt://stream.vrcdn.live/live/shengaero"
-
-[rtspt_stream_vrcdn_live_live_thewhitecrayon]
-display_name = "rtspt://stream.vrcdn.live/live/thewhitecrayon"
 
 [ru]
 display_name = "Ru"
@@ -801,6 +782,10 @@ display_name = "Shawarmachine"
 
 [shawntrrttll]
 display_name = "Shawntrrttll"
+
+[shengaero]
+display_name = "shengaero"
+cdn = "rtspt://stream.vrcdn.live/live/shengaero"
 
 [shishimaru]
 display_name = "Shishimaru"
@@ -875,9 +860,6 @@ display_name = "Stella_VRC"
 display_name = "Steph"
 aliases = ["steph"]
 
-[still_confirming]
-display_name = "Still confirming"
-
 [stoob]
 display_name = "Stoob"
 
@@ -917,6 +899,10 @@ display_name = "TatsuTracks"
 
 [thelenzseesall]
 display_name = "TheLenzSeesAll"
+
+[thewhitecrayon]
+display_name = "thewhitecrayon"
+cdn = "rtspt://stream.vrcdn.live/live/thewhitecrayon"
 
 [thistlebunny]
 display_name = "Thistlebunny"
@@ -965,7 +951,7 @@ display_name = "TwoHeartz"
 display_name = "Typtamise"
 
 [untitled]
-display_name = "-UNTITLED-"
+display_name = "UNTITLED"
 
 [v333v]
 display_name = "v333v"
@@ -983,12 +969,8 @@ aliases = ["VEnixia"]
 [verdantvale]
 display_name = "VerdantVale"
 
-[verminiferous_maybe]
-display_name = "Verminiferous (maybe)"
-
-[video_use]
-display_name = "(Video Use)"
-aliases = ["(VIDEO USE）"]
+[verminiferous]
+display_name = "Verminiferous"
 
 [violet_thunder]
 display_name = "Violet Thunder"
@@ -1028,9 +1010,7 @@ display_name = "WarneD1"
 
 [weaver]
 display_name = "Weaver"
-
-[weaver_rtspt_stream_vrcdn_live_live_thewhitecrayon]
-display_name = "Weaver rtspt://stream.vrcdn.live/live/thewhitecrayon"
+aliases = ["Weaver rtspt://stream.vrcdn.live/live/thewhitecrayon"]
 
 [whimz]
 display_name = "Whimz"
@@ -1084,10 +1064,6 @@ display_name = "xiriya"
 
 [xnfe]
 display_name = "XNFE"
-
-[y]
-display_name = "y"
-aliases = ["Y"]
 
 [yakorusu]
 display_name = "Yakorusu"

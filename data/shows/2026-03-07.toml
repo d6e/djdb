@@ -13,7 +13,7 @@ notes = "rtspt://stream.vrcdn.live/live/embervrc"
 [[sets]]
 start = "23:00"
 dj = "meowogai"
-vj = "weaver_rtspt_stream_vrcdn_live_live_thewhitecrayon"
+vj = "weaver"
 
 [[sets]]
 start = "24:00"
