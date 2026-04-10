@@ -134,6 +134,10 @@ struct DjdbApp {
 
     // Status
     toast: Option<Toast>,
+    /// Previous frame's window focus state, used to detect focus-gained
+    /// transitions so we can silently reload the dataset when the user
+    /// returns from editing files elsewhere.
+    prev_focused: bool,
 }
 
 struct Toast {
@@ -188,6 +192,7 @@ impl DjdbApp {
             stale_days: 60,
             last_played_input: String::new(),
             toast: None,
+            prev_focused: true,
         };
         app.reload();
         app
@@ -227,16 +232,20 @@ impl DjdbApp {
 
 impl eframe::App for DjdbApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        // Silently reload whenever the window regains focus, so edits made
+        // from the CLI / text editor / git pull show up when the user comes
+        // back. Dirty drafts stay in memory and are left alone.
+        let focused = ctx.input(|i| i.focused);
+        if focused && !self.prev_focused {
+            self.reload();
+        }
+        self.prev_focused = focused;
+
         egui::TopBottomPanel::top("tabs").show(ctx, |ui| {
             ui.horizontal(|ui| {
                 ui.selectable_value(&mut self.tab, Tab::Shows, "Shows");
                 ui.selectable_value(&mut self.tab, Tab::Performers, "Performers");
                 ui.selectable_value(&mut self.tab, Tab::Queries, "Queries");
-                ui.separator();
-                if ui.button("Reload").clicked() {
-                    self.reload();
-                    self.set_ok("reloaded from disk");
-                }
             });
         });
 
