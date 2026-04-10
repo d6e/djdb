@@ -1,0 +1,25 @@
+date = "2025-07-11"
+
+[[sets]]
+start = "23:00"
+dj = "sillybit"
+
+[[sets]]
+start = "24:00"
+dj = "meowski"
+
+[[sets]]
+start = "25:00"
+dj = "electro"
+
+[[sets]]
+start = "26:00"
+dj = "ru"
+
+[[sets]]
+start = "27:00"
+dj = "murdokes"
+
+[[sets]]
+start = "47:00"
+dj = "sera_akai"

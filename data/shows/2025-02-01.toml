@@ -1,0 +1,35 @@
+date = "2025-02-01"
+
+[[sets]]
+start = "21:00"
+dj = "paris"
+
+[[sets]]
+start = "22:00"
+dj = "zeeke"
+
+[[sets]]
+start = "23:00"
+dj = "yorbae_matte"
+
+[[sets]]
+start = "24:00"
+dj = "a_ddos_apple"
+
+[[sets]]
+start = "25:00"
+dj = "hexe_exe"
+notes = "rtspt://stream.vrcdn.live/live/tamagomago"
+
+[[sets]]
+start = "26:00"
+dj = "tamagomago"
+notes = "https://stream.vrcdn.live/live/tamagomago.live.mp4"
+
+[[sets]]
+start = "27:00"
+dj = "sqn"
+
+[[sets]]
+start = "28:00"
+dj = "dragoo"

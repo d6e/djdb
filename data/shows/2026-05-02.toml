@@ -1,0 +1,23 @@
+date = "2026-05-02"
+
+[[sets]]
+start = "22:00"
+dj = "baphomet"
+vj = "tsubasa"
+
+[[sets]]
+start = "23:00"
+dj = "wire_witch"
+notes = "rtspt://stream.vrcdn.live/live/wirewitch"
+
+[[sets]]
+start = "24:00"
+dj = "fyrefoxx"
+
+[[sets]]
+start = "25:00"
+dj = "ars_gaoetia"
+
+[[sets]]
+start = "26:00"
+dj = "aliquem"

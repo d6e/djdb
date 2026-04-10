@@ -1,0 +1,34 @@
+date = "2025-01-11"
+
+[[sets]]
+start = "21:00"
+dj = "echo1"
+
+[[sets]]
+start = "22:00"
+dj = "plaster"
+
+[[sets]]
+start = "23:00"
+dj = "taisai"
+notes = "rtspt://stream.vrcdn.live/live/taisai"
+
+[[sets]]
+start = "24:00"
+dj = "ellaris"
+
+[[sets]]
+start = "25:00"
+dj = "xia"
+
+[[sets]]
+start = "26:00"
+dj = "pizza_byte"
+
+[[sets]]
+start = "27:00"
+dj = "abby"
+
+[[sets]]
+start = "28:00"
+dj = "aliced"

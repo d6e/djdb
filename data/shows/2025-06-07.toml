@@ -1,0 +1,36 @@
+date = "2025-06-07"
+
+[[sets]]
+start = "21:00"
+dj = "shawarmachine"
+
+[[sets]]
+start = "22:00"
+dj = "najdorf"
+
+[[sets]]
+start = "23:00"
+dj = "yakorusu"
+notes = "rtspt://stream.vrcdn.live/live/yakorusu"
+
+[[sets]]
+start = "24:00"
+dj = "atri"
+
+[[sets]]
+start = "25:00"
+dj = "hosoken"
+notes = "rtspt://stream.vrcdn.live/live/hosoken"
+
+[[sets]]
+start = "26:00"
+dj = "ashumi"
+notes = "rtspt://stream.vrcdn.live/live/ashumi"
+
+[[sets]]
+start = "27:00"
+dj = "dragoo"
+
+[[sets]]
+start = "28:00"
+dj = "grizzmango"

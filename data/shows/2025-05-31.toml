@@ -1,0 +1,41 @@
+date = "2025-05-31"
+
+[[sets]]
+start = "21:00"
+dj = "trinity"
+
+[[sets]]
+start = "22:00"
+dj = "wackangels"
+notes = "yemmie discord"
+
+[[sets]]
+start = "23:00"
+dj = "grost"
+
+[[sets]]
+start = "24:00"
+dj = "stella_vrc"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "25:00"
+dj = "atogasaki"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "26:00"
+dj = "gabby"
+
+[[sets]]
+start = "27:00"
+dj = "strawberry_protato"
+notes = "rtspt://stream.vrcdn.live/live/strawberryprotato"
+
+[[sets]]
+start = "28:00"
+dj = "dj_sleepy_gf"
+
+[[sets]]
+start = "29:00"
+dj = "sera_akai"

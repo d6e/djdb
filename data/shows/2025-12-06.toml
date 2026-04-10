@@ -1,0 +1,43 @@
+date = "2025-12-06"
+
+[[sets]]
+start = "21:00"
+dj = "jere"
+notes = "rtspt://stream.vrcdn.live/live/jere"
+
+[[sets]]
+start = "22:00"
+dj = "thelenzseesall"
+vj = "oofy_exe"
+notes = "rtspt://stream.vrcdn.live/live/thelenzseesall"
+
+[[sets]]
+start = "23:00"
+dj = "extroid"
+notes = "rtspt://stream.vrcdn.live/live/extroid"
+
+[[sets]]
+start = "24:00"
+dj = "schlick"
+notes = "rtspt://stream.vrcdn.live/live/schlick"
+
+[[sets]]
+start = "25:00"
+dj = "tw0p0intzer0"
+vj = "yuki"
+notes = "rtspt://stream.vrcdn.live/live/tw0p0intzer0"
+
+[[sets]]
+start = "26:00"
+dj = "element_johnny"
+notes = "rtspt://stream.vrcdn.live/live/elementjonny"
+
+[[sets]]
+start = "27:00"
+dj = "shloop"
+notes = "https://www.twitch.tv/shloop_vrc"
+
+[[sets]]
+start = "28:00"
+dj = "demrie"
+notes = "rtspt://stream.vrcdn.live/live/rosebunny"

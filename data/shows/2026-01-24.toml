@@ -1,0 +1,43 @@
+date = "2026-01-24"
+
+[[sets]]
+start = "21:00"
+dj = "albbie"
+vj = "gigglelord"
+notes = "rtspt://stream.vrcdn.live/live/albbie"
+
+[[sets]]
+start = "22:00"
+dj = "icysami"
+notes = "https://www.twitch.tv/icysami"
+
+[[sets]]
+start = "23:00"
+dj = "proto"
+vj = "babyjack"
+notes = "rtspt://stream.vrcdn.live/live/babyjack"
+
+[[sets]]
+start = "24:00"
+dj = "vox3x"
+notes = "rtspt://stream.vrcdn.live/live/voxex"
+
+[[sets]]
+start = "25:00"
+dj = "wylda"
+notes = "rtspt://stream.vrcdn.live/live/wylda1"
+
+[[sets]]
+start = "26:00"
+dj = "cruzbot"
+notes = "rtspt://stream.vrcdn.live/live/cruzbotix"
+
+[[sets]]
+start = "27:00"
+dj = "extroid"
+notes = "rtspt://stream.vrcdn.live/live/extroid"
+
+[[sets]]
+start = "28:00"
+dj = "critical42069"
+notes = "rtspt://stream.vrcdn.live/live/critical42069"

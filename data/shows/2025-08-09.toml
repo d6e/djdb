@@ -1,0 +1,45 @@
+date = "2025-08-09"
+
+[[sets]]
+start = "21:00"
+dj = "lugasch"
+vj = "y"
+
+[[sets]]
+start = "22:00"
+dj = "qbitz"
+vj = "y"
+
+[[sets]]
+start = "23:00"
+dj = "fangs"
+vj = "venixia"
+notes = "rtspt://stream.vrcdn.live/live/trainingfangs"
+
+[[sets]]
+start = "24:00"
+dj = "xiriya"
+vj = "y"
+notes = "Kaleidosky VPN"
+
+[[sets]]
+start = "25:00"
+dj = "oreovix"
+vj = "y"
+
+[[sets]]
+start = "26:00"
+dj = "kohadachan"
+vj = "y"
+notes = "rtspt://stream.vrcdn.live/live/kohadachan"
+
+[[sets]]
+start = "27:00"
+dj = "yoru"
+vj = "y"
+notes = "rtspt://stream.vrcdn.live/live/yoru"
+
+[[sets]]
+start = "28:00"
+dj = "ru"
+vj = "y"

@@ -1,0 +1,35 @@
+date = "2025-11-29"
+
+[[sets]]
+start = "21:00"
+dj = "faint"
+
+[[sets]]
+start = "22:00"
+dj = "tryptamise"
+
+[[sets]]
+start = "23:00"
+dj = "ru"
+
+[[sets]]
+start = "24:00"
+dj = "yoru"
+notes = "rtspt://stream.vrcdn.live/live/yoru"
+
+[[sets]]
+start = "25:00"
+dj = "impeccable"
+
+[[sets]]
+start = "26:00"
+dj = "vanity"
+
+[[sets]]
+start = "27:00"
+dj = "ashumi"
+notes = "rtspt://stream.vrcdn.live/live/ashumi"
+
+[[sets]]
+start = "28:00"
+dj = "malaa_tatsu"

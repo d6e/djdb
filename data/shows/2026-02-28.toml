@@ -1,0 +1,39 @@
+date = "2026-02-28"
+
+[[sets]]
+start = "21:00"
+dj = "lenz"
+
+[[sets]]
+start = "22:00"
+dj = "haxadagron"
+vj = "weaver_rtspt_stream_vrcdn_live_live_thewhitecrayon"
+
+[[sets]]
+start = "23:00"
+dj = "shabam"
+vj = "weaver_rtspt_stream_vrcdn_live_live_thewhitecrayon"
+
+[[sets]]
+start = "24:00"
+dj = "yukatama"
+notes = "rtspt://stream.vrcdn.live/live/yukatamax"
+
+[[sets]]
+start = "25:00"
+dj = "lesse"
+vj = "lesse"
+notes = "rtspt://stream.vrcdn.live/live/lesse"
+
+[[sets]]
+start = "26:00"
+dj = "stroobie"
+
+[[sets]]
+start = "27:00"
+dj = "tokage"
+notes = "rtspt://stream.vrcdn.live/live/tokage"
+
+[[sets]]
+start = "28:00"
+dj = "sera_akai"

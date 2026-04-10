@@ -1,0 +1,41 @@
+date = "2025-06-28"
+
+[[sets]]
+start = "21:00"
+dj = "kex"
+
+[[sets]]
+start = "22:00"
+dj = "tryptamise"
+
+[[sets]]
+start = "23:00"
+dj = "wookieedubs"
+
+[[sets]]
+start = "24:00"
+dj = "shivaxi"
+
+[[sets]]
+start = "25:00"
+dj = "ksk_u"
+notes = "rtspt://stream.vrcdn.live/live/ksk"
+
+[[sets]]
+start = "26:00"
+dj = "yoru"
+notes = "rtspt://stream.vrcdn.live/live/yoru"
+
+[[sets]]
+start = "27:00"
+dj = "tiyarusia"
+notes = "rtspt://stream.vrcdn.live/live/charusia"
+
+[[sets]]
+start = "28:00"
+dj = "wake"
+
+[[sets]]
+start = "29:00"
+dj = "tamagomago"
+notes = "rtspt://stream.vrcdn.live/live/tamagomago"

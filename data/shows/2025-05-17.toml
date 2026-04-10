@@ -1,0 +1,38 @@
+date = "2025-05-17"
+
+[[sets]]
+start = "21:00"
+dj = "snowie"
+notes = "4pm 6 hour set"
+
+[[sets]]
+start = "22:00"
+dj = "whitty"
+
+[[sets]]
+start = "23:00"
+dj = "nerdy_hydra"
+
+[[sets]]
+start = "24:00"
+dj = "taisai"
+notes = "rtspt://stream.vrcdn.live/live/taisai"
+
+[[sets]]
+start = "25:00"
+dj = "tamagomago"
+vj = "video_use"
+notes = "rtspt://stream.vrcdn.live/live/tamagomago"
+
+[[sets]]
+start = "26:00"
+dj = "2n"
+notes = "Pre-record; Need help streaming file to maintain event continuity"
+
+[[sets]]
+start = "27:00"
+dj = "ru"
+
+[[sets]]
+start = "28:00"
+dj = "sorami"

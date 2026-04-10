@@ -1,0 +1,36 @@
+date = "2025-05-03"
+
+[[sets]]
+start = "21:00"
+dj = "beeb"
+
+[[sets]]
+start = "22:00"
+dj = "k3n"
+
+[[sets]]
+start = "23:00"
+dj = "snuggles_prime"
+
+[[sets]]
+start = "24:00"
+dj = "cynra"
+
+[[sets]]
+start = "25:00"
+dj = "twoheartz"
+
+[[sets]]
+start = "26:00"
+dj = "dj_tsumugi"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "27:00"
+dj = "kxa"
+notes = "https://twitch.tv/kxa174"
+
+[[sets]]
+start = "28:00"
+dj = "loser4dim"
+notes = "Kaleidosky VRCDN"

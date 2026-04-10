@@ -1,0 +1,30 @@
+date = "2025-04-19"
+
+[[sets]]
+start = "22:00"
+dj = "extroid"
+
+[[sets]]
+start = "23:00"
+dj = "kitsunemixes"
+
+[[sets]]
+start = "24:00"
+dj = "wookiedubs"
+
+[[sets]]
+start = "25:00"
+dj = "nannerz"
+
+[[sets]]
+start = "26:00"
+dj = "ashumi"
+notes = "rtspt://stream.vrcdn.live/live/ashumi"
+
+[[sets]]
+start = "27:00"
+dj = "azarya"
+
+[[sets]]
+start = "28:00"
+dj = "wall_e"

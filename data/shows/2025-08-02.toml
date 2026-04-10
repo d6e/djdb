@@ -1,0 +1,50 @@
+date = "2025-08-02"
+
+[[sets]]
+start = "20:00"
+dj = "meowogai"
+vj = "y"
+
+[[sets]]
+start = "21:00"
+dj = "ru"
+vj = "y"
+notes = "rtspt://stream.vrcdn.live/live/strawberryprotato"
+
+[[sets]]
+start = "22:00"
+dj = "strawberry_protato"
+vj = "n"
+
+[[sets]]
+start = "23:00"
+dj = "dua_yinepu"
+vj = "y"
+
+[[sets]]
+start = "24:00"
+dj = "sbe"
+vj = "y"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "25:00"
+dj = "xnfe"
+vj = "kaleidosky_provided"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "26:00"
+dj = "cb_square"
+vj = "kaleidosky_provided"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "27:00"
+dj = "hidden5s"
+vj = "y"
+
+[[sets]]
+start = "28:00"
+dj = "dullpeak"
+vj = "y"

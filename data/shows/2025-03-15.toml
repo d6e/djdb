@@ -1,0 +1,45 @@
+date = "2025-03-15"
+
+[[sets]]
+start = "21:00"
+dj = "pastel_folf"
+
+[[sets]]
+start = "22:00"
+dj = "fadingangel"
+notes = "stigmata discord"
+
+[[sets]]
+start = "23:00"
+dj = "tryptamise"
+vj = "steph"
+
+[[sets]]
+start = "24:00"
+dj = "keno"
+
+[[sets]]
+start = "25:00"
+dj = "yoru"
+notes = "rtspt://stream.vrcdn.live/live/yoru"
+
+[[sets]]
+start = "26:00"
+dj = "yukatama"
+notes = "rtspt://stream.vrcdn.live/live/yukatamax"
+
+[[sets]]
+start = "27:00"
+dj = "taisai"
+notes = "rtspt://stream.vrcdn.live/live/taisai"
+
+[[sets]]
+start = "28:00"
+dj = "tamagomago"
+vj = "video_use"
+notes = "rtspt://stream.vrcdn.live/live/tamagomago"
+
+[[sets]]
+start = "29:00"
+dj = "ksk_u"
+notes = "rtspt://stream.vrcdn.live/live/ksk"

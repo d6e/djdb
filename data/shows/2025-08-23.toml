@@ -1,0 +1,32 @@
+date = "2025-08-23"
+
+[[sets]]
+start = "21:00"
+dj = "mayahive"
+
+[[sets]]
+start = "22:00"
+dj = "meowski"
+
+[[sets]]
+start = "23:00"
+dj = "bishamon"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "24:00"
+dj = "sbe"
+
+[[sets]]
+start = "25:00"
+dj = "rabbitex"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "26:00"
+dj = "ksk_u"
+notes = "rtspt://stream.vrcdn.live/live/ksk"
+
+[[sets]]
+start = "27:00"
+dj = "ru"

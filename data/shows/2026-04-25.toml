@@ -1,0 +1,38 @@
+date = "2026-04-25"
+
+[[sets]]
+start = "21:00"
+dj = "transistors_morganite_draco"
+
+[[sets]]
+start = "22:00"
+dj = "kitsuzo"
+
+[[sets]]
+start = "23:00"
+dj = "typtamise"
+
+[[sets]]
+start = "24:00"
+dj = "megumi_m36_m1"
+notes = "rtspt://stream.vrcdn.live/live/megumi"
+
+[[sets]]
+start = "25:00"
+dj = "ksk_u"
+notes = "rtspt://stream.vrcdn.live/live/ksk"
+
+[[sets]]
+start = "26:00"
+dj = "xnfe"
+notes = "http://twitch.tv/xnfe_dj"
+
+[[sets]]
+start = "27:00"
+dj = "s_s_stripe"
+notes = "https://twitch.tv/s_s_stripe1111"
+
+[[sets]]
+start = "28:00"
+dj = "ashumi"
+notes = "rtspt://stream.vrcdn.live/live/ashumi"

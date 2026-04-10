@@ -1,0 +1,42 @@
+date = "2026-04-04"
+
+[[sets]]
+start = "21:00"
+dj = "aryhith"
+notes = "rtspt://stream.vrcdn.live/live/aryhith"
+
+[[sets]]
+start = "22:00"
+dj = "stoob"
+notes = "rtspt://stream.vrcdn.live/live/stoob"
+
+[[sets]]
+start = "23:00"
+dj = "deejay_okay"
+vj = "weaver"
+notes = "rtspt://stream.vrcdn.live/live/deejayokay"
+
+[[sets]]
+start = "24:00"
+dj = "kamicircle"
+notes = "(kaleidoskyCDN)"
+
+[[sets]]
+start = "25:00"
+dj = "manual_soap"
+notes = "rtspt://stream.vrcdn.live/live/manualsoap"
+
+[[sets]]
+start = "26:00"
+dj = "simca"
+notes = "rtspt://stream.vrcdn.live/live/isacarius"
+
+[[sets]]
+start = "27:00"
+dj = "slash_gallagher"
+notes = "rtspt://stream.vrcdn.live/live/slashg"
+
+[[sets]]
+start = "28:00"
+dj = "dingo_yabuki"
+notes = "https://stream.vrcdn.live/live/dingoyabuki.live.ts"

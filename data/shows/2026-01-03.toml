@@ -1,0 +1,42 @@
+date = "2026-01-03"
+
+[[sets]]
+start = "21:00"
+dj = "scoobypup"
+notes = "https://stream.vrcdn.live/live/scoobypup.live.ts"
+
+[[sets]]
+start = "22:00"
+dj = "tammy_the_deer"
+
+[[sets]]
+start = "23:00"
+dj = "untitled"
+notes = "rtspt://stream.vrcdn.live/live/untitled"
+
+[[sets]]
+start = "24:00"
+dj = "moonglow"
+vj = "moonglow"
+notes = "Discord: Icedog"
+
+[[sets]]
+start = "25:00"
+dj = "wake"
+vj = "steph"
+notes = "rtspt://stream.vrcdn.live/live/softlysteph"
+
+[[sets]]
+start = "26:00"
+dj = "crunchy_joints"
+notes = "rtspt://stream.vrcdn.live/live/crunchyjoints"
+
+[[sets]]
+start = "27:00"
+dj = "jflo"
+notes = "rtspt://stream.vrcdn.live/live/jflobeatbox"
+
+[[sets]]
+start = "28:00"
+dj = "sera_akai"
+notes = "rtspt://stream.vrcdn.live/live/kaleidosky"

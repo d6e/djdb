@@ -1,2 +1,1131 @@
-# Performers, keyed by slug (lowercase a-z, 0-9, underscore).
-# Add new entries here, or let `djdb new-performer` do it.
+[2_0]
+display_name = '"2.0"'
+
+[2n]
+display_name = "2N"
+
+[6ix]
+display_name = "6ix"
+
+[a_ddos_apple]
+display_name = "A:// DDOS & Apple"
+
+[abby]
+display_name = "Abby"
+
+[albbie]
+display_name = "Albbie"
+
+[alease]
+display_name = "Alease"
+
+[aliced]
+display_name = "AliceD"
+
+[aliquem]
+display_name = "Aliquem"
+
+[aliquem_sky_art]
+display_name = "Aliquem (Sky Art)"
+
+[andromeda]
+display_name = "Andromeda"
+
+[anomaly]
+display_name = "Anomaly"
+aliases = ["ANOMALY"]
+
+[antithesis]
+display_name = "Antithesis"
+
+[aose_hayakawa]
+display_name = "Aose Hayakawa"
+
+[apois]
+display_name = "Apois"
+
+[arbi]
+display_name = "Arbi"
+
+[ars_gaoeta]
+display_name = "Ars Gaoeta"
+
+[ars_gaoetia]
+display_name = "Ars Gaoetia"
+
+[ars_goatia]
+display_name = "Ars Goatia"
+
+[aryhith]
+display_name = "Aryhith"
+
+[ashumi]
+display_name = "Ashumi"
+
+[asmo]
+display_name = "Asmo"
+
+[atkom]
+display_name = "Atkom"
+
+[atogasaki]
+display_name = "ATOGASAKI"
+
+[atri]
+display_name = "Atri"
+
+[azarya]
+display_name = "Azarya"
+
+[babyjack]
+display_name = "BabyJack"
+aliases = ["Babyjack"]
+
+[bacon_pancakes]
+display_name = "Bacon Pancakes"
+
+[baphomet]
+display_name = "Baphomet"
+
+[basspuppy]
+display_name = "Basspuppy"
+
+[bawbi]
+display_name = "Bawbi"
+
+[beeb]
+display_name = "beeb"
+aliases = ["Beeb"]
+
+[bishamon]
+display_name = "Bishamon"
+
+[blazelion]
+display_name = "Blazelion"
+
+[bleak]
+display_name = "Bleak"
+
+[blue_copper]
+display_name = "Blue_copper"
+
+[brooke]
+display_name = "Brooke"
+
+[brother_durry]
+display_name = "Brother Durry"
+
+[bubbi_the_whale]
+display_name = "Bubbi the Whale"
+
+[bvstet]
+display_name = "BVSTET"
+
+[casidhe]
+display_name = "casidhe"
+
+[cb_square]
+display_name = "CB SQUARE"
+
+[cherry_dawgo]
+display_name = "Cherry Dawgo"
+
+[chickywashere]
+display_name = "Chickywashere"
+
+[chillphil]
+display_name = "Chillphil"
+
+[code_jin]
+display_name = "Code Jin"
+
+[cornbread]
+display_name = "cornbread"
+aliases = ["Cornbread"]
+
+[cozen]
+display_name = "Cozen"
+
+[critical42069]
+display_name = "Critical42069"
+
+[crunchy_joints]
+display_name = "Crunchy Joints"
+
+[cruzbot]
+display_name = "Cruzbot"
+
+[cybercvlt]
+display_name = "CYBERCVLT"
+
+[cynra]
+display_name = "Cynra"
+
+[deejay_okay]
+display_name = "Deejay Okay"
+
+[defqon]
+display_name = "Defqon"
+
+[demrie]
+display_name = "Demrie"
+
+[denzo]
+display_name = "Denzo"
+
+[denzophage]
+display_name = "Denzophage"
+
+[depereo]
+display_name = "depereo"
+
+[digitalmorgue]
+display_name = "DigitalMorgue"
+
+[digitalroze]
+display_name = "DigitalRoze"
+
+[dingo_yabuki]
+display_name = "Dingo Yabuki"
+
+[dj_ear]
+display_name = "DJ Ear"
+
+[dj_kanisan]
+display_name = "DJ KANISAN"
+
+[dj_quinn]
+display_name = "DJ Quinn"
+
+[dj_sleepy_gf]
+display_name = "DJ Sleepy GF"
+
+[dj_tsiran]
+display_name = "DJ Tsiran"
+
+[dj_tsumugi]
+display_name = "DJ Tsumugi"
+aliases = ["dj_tsumugi"]
+
+[djcd]
+display_name = "DJCD"
+
+[dox_drakes]
+display_name = "Dox Drakes"
+
+[dragoo]
+display_name = "Dragoo"
+
+[driima]
+display_name = "Driima"
+
+[dua_yinepu]
+display_name = "Dua Yinepu"
+
+[dulce]
+display_name = "Dulce"
+
+[dullpeak]
+display_name = "Dullpeak"
+aliases = ["DullPeak"]
+
+[echo1]
+display_name = "Echo1"
+
+[ejay]
+display_name = "Ejay"
+
+[ekkofox]
+display_name = "Ekkofox"
+
+[electro]
+display_name = "Electro"
+
+[element_johnny]
+display_name = "Element Johnny"
+
+[elementjonny]
+display_name = "ElementJonny"
+
+[ellaris]
+display_name = "Ellaris"
+
+[elseif]
+display_name = "{ELSEIF} ?"
+
+[ember]
+display_name = "Ember"
+
+[exorcyst]
+display_name = "Exorcyst"
+
+[extroid]
+display_name = "Extroid"
+aliases = ["extroid"]
+
+[fadingangel]
+display_name = "FadingAngel"
+
+[faerie]
+display_name = "Faerie"
+
+[faint]
+display_name = "FAINT"
+
+[fangs]
+display_name = "FANGS"
+
+[finny]
+display_name = "Finny"
+
+[firescaw]
+display_name = "Firescaw"
+
+[flay]
+display_name = "Flay"
+
+[fovero]
+display_name = "Fovero"
+
+[friendshp]
+display_name = "FRIENDSHP"
+
+[future_funk_femme]
+display_name = "Future Funk Femme"
+
+[fyrefoxx]
+display_name = "FyreFoxx"
+
+[fyzika]
+display_name = "Fyzika"
+
+[gabby]
+display_name = "gabby!"
+
+[genki]
+display_name = "Genki"
+
+[gigglelord]
+display_name = "GiggleLord"
+
+[goblin_mode]
+display_name = "Goblin Mode"
+aliases = ["Goblin mode"]
+
+[gojo]
+display_name = "GOJO"
+aliases = ["Gojo"]
+
+[grizzmango]
+display_name = "GrizzMango"
+
+[grost]
+display_name = "Grost"
+
+[gunnthor]
+display_name = "Gunnthor"
+
+[hails]
+display_name = "Hails"
+aliases = ["hails"]
+
+[hanabi_aero]
+display_name = "Hanabi Aero"
+
+[haruka]
+display_name = "Haruカ"
+
+[haxadagron]
+display_name = "Haxadagron"
+
+[hecka]
+display_name = "Hecka"
+
+[hexe_exe]
+display_name = "Hexe.exe"
+aliases = ["hexe.exe"]
+
+[hidden5s]
+display_name = "Hidden5s"
+
+[hidi]
+display_name = "Hidi"
+
+[hobnoxus]
+display_name = "Hobnoxus"
+
+[holo]
+display_name = "Holo"
+
+[honeydingo]
+display_name = "Honeydingo"
+
+[hosoken]
+display_name = "hosoken"
+
+[hydie_nerdyhydra]
+display_name = "Hydie (NerdyHydra)"
+
+[icysami]
+display_name = "IcySami"
+
+[imo_oimo]
+display_name = "imo-oimo"
+
+[impeccable]
+display_name = "Impeccable"
+
+[indigo_angel]
+display_name = "Indigo Angel"
+
+[isacarius]
+display_name = "Isacarius"
+
+[jack]
+display_name = "Jack"
+
+[jaime]
+display_name = "Jaime"
+
+[jasmine]
+display_name = "Jasmine"
+
+[jasmine_pizza]
+display_name = "JAsmine Pizza"
+
+[jayo]
+display_name = "Jayo"
+
+[jazzy_senpai]
+display_name = "Jazzy Senpai"
+
+[jazzyk]
+display_name = "JazzyK"
+
+[jere]
+display_name = "Jere"
+
+[jestertwo]
+display_name = "JesterTwo"
+
+[jflo]
+display_name = "Jflo"
+aliases = ["JFlo"]
+
+[jinon]
+display_name = "Jinon"
+
+[jinx]
+display_name = "jinx"
+
+[jinx_tatsu]
+display_name = "jinx tatsu"
+
+[jivy]
+display_name = "Jivy"
+
+[johari_b2b_dieselsaurus]
+display_name = "Johari B2B Dieselsaurus"
+
+[joulezz]
+display_name = "Joulezz"
+
+[juno]
+display_name = "Juno"
+
+[jyoshu]
+display_name = "Jyoshu"
+
+[k3n]
+display_name = "K3n"
+
+[kadachii_b2b_estrogen_dealer]
+display_name = "Kadachii B2B Estrogen Dealer"
+
+[kagetora]
+display_name = "Kagetora"
+aliases = ["Kagetora."]
+
+[kai_steph]
+display_name = "Kai & Steph"
+
+[kale]
+display_name = "Kale"
+
+[kaleidosky_provided]
+display_name = "Kaleidosky Provided"
+
+[kamicircle]
+display_name = "KAMIcircle"
+
+[karina_maenashi]
+display_name = "Karina Maenashi"
+aliases = ["karina maenashi"]
+
+[kasparoff]
+display_name = "Kasparoff"
+
+[katz]
+display_name = "Katz"
+
+[keebs]
+display_name = "Keebs"
+
+[keno]
+display_name = "Keno"
+
+[keno_tatsu]
+display_name = "Keno Tatsu"
+
+[kex]
+display_name = "Kex"
+
+[kima]
+display_name = "Kima"
+
+[kitsunemixes]
+display_name = "KitsuneMixes"
+
+[kitsuzo]
+display_name = "Kitsuzo"
+
+[kiwii]
+display_name = "Kiwii"
+
+[klavax]
+display_name = "Klavax"
+
+[klu3]
+display_name = "Klu3"
+
+[kohada]
+display_name = "Kohada"
+aliases = ["kohada"]
+
+[kohadachan]
+display_name = "kohadachan"
+aliases = ["Kohadachan"]
+
+[kojo]
+display_name = "Kojo"
+
+[ksk_u]
+display_name = "Ksk_u"
+aliases = ["ksk_u"]
+
+[kxa]
+display_name = "KXA"
+
+[lady_bug]
+display_name = "Lady Bug"
+
+[ladybug]
+display_name = "LadyBug"
+aliases = ["Ladybug"]
+
+[ladybug_driima_b2b]
+display_name = "Ladybug/Driima B2B"
+
+[lau]
+display_name = "Lau"
+
+[le]
+display_name = "LE"
+
+[leah_flex]
+display_name = "Leah (flex)"
+
+[lenz]
+display_name = "Lenz"
+
+[lesse]
+display_name = "Lesse"
+
+[libralove]
+display_name = "LibraLove"
+
+[lili]
+display_name = "Lili"
+
+[loser4dim]
+display_name = "loser4dim"
+
+[lost_takeover_bastet_to_book_vj_keno]
+display_name = "LOST takeover.. Bastet to book...VJ Keno"
+
+[loveleemusic]
+display_name = "LoveLeeMusic"
+
+[lucina]
+display_name = "Lucina"
+
+[lugasch]
+display_name = "Lugasch"
+
+[lumi]
+display_name = "Lumi"
+
+[lylac]
+display_name = "Lylac"
+
+[malaa]
+display_name = "Malaa"
+
+[malaa_tatsu]
+display_name = "Malaa Tatsu"
+
+[manual_soap]
+display_name = "Manual Soap"
+
+[mayahive]
+display_name = "MayaHIve"
+
+[megumi_m36_m1]
+display_name = "めぐみ ｢M36_M1｣"
+
+[melocilde]
+display_name = "melocilde"
+
+[meowogai]
+display_name = "MeOwOgai"
+aliases = ["Meowogai"]
+
+[meowski]
+display_name = "Meowski"
+aliases = ["meowski"]
+
+[mercury_in_gemini]
+display_name = "Mercury in Gemini"
+
+[micole]
+display_name = "Micole"
+
+[midekai]
+display_name = "Midekai"
+
+[missalykatt]
+display_name = "MissAlyKatt"
+
+[moethelawn]
+display_name = "MoetheLawn"
+aliases = ["moethelawn"]
+
+[moonglow]
+display_name = "Moonglow"
+
+[murdokes]
+display_name = "Murdokes"
+
+[n]
+display_name = "n"
+
+[najdorf]
+display_name = "Najdorf"
+
+[nana_wunsek]
+display_name = "Nana Wunsek"
+
+[nannerz]
+display_name = "Nannerz"
+
+[nanopixel]
+display_name = "Nanopixel"
+
+[narshwhal]
+display_name = "Narshwhal"
+
+[narswhal_evrblum]
+display_name = "Narswhal & evrblüm"
+
+[neo_destiny]
+display_name = "Neo Destiny"
+
+[nerdy_hydra]
+display_name = "Nerdy Hydra"
+
+[nin]
+display_name = "Nin"
+
+[ninepearlfangs]
+display_name = "NinePearlFangs"
+
+[none]
+display_name = "None"
+
+[nyaaa]
+display_name = "Nyaaa"
+
+[olib]
+display_name = "Olib"
+
+[oly]
+display_name = "Oly"
+
+[oofy]
+display_name = "oofy"
+
+[oofy_exe]
+display_name = "oofy_exe"
+
+[open_deck]
+display_name = "Open Deck"
+
+[oreovix]
+display_name = "OreoVix"
+aliases = ["Oreovix"]
+
+[orso]
+display_name = "Orso"
+
+[otterspace]
+display_name = "Otterspace"
+
+[p_i_n_k]
+display_name = "P I N K"
+
+[paintedfoxes]
+display_name = "PaintedFoxes"
+
+[paris]
+display_name = "Paris"
+
+[pastel_folf]
+display_name = "Pastel Folf"
+
+[pawllydee]
+display_name = "PawllyDee"
+
+[pizza_byte]
+display_name = "Pizza Byte"
+
+[pizza_princess]
+display_name = "Pizza Princess"
+
+[plaster]
+display_name = "PLaster"
+
+[ponhayate]
+display_name = "ponhayate"
+
+[prism]
+display_name = "Prism"
+
+[proto]
+display_name = "Proto"
+
+[psicough]
+display_name = "Psicough"
+
+[pulse]
+display_name = "Pulse!"
+
+[qbitz]
+display_name = "qbitz"
+
+[rabbitex]
+display_name = "Rabbitex"
+
+[rain]
+display_name = "Rain"
+
+[reflexii]
+display_name = "RefleXII"
+
+[resato]
+display_name = "Resato"
+
+[rnch]
+display_name = "RNCH"
+
+[robiniki]
+display_name = "Robiniki"
+
+[rtspt_stream_vrcdn_live_live_atomicpeach]
+display_name = "rtspt://stream.vrcdn.live/live/atomicpeach"
+
+[rtspt_stream_vrcdn_live_live_rainiwa]
+display_name = "rtspt://stream.vrcdn.live/live/rainiwa"
+
+[rtspt_stream_vrcdn_live_live_shengaero]
+display_name = "rtspt://stream.vrcdn.live/live/shengaero"
+
+[rtspt_stream_vrcdn_live_live_thewhitecrayon]
+display_name = "rtspt://stream.vrcdn.live/live/thewhitecrayon"
+
+[ru]
+display_name = "Ru"
+
+[rumbla]
+display_name = "Rumbla"
+
+[s_s_stripe]
+display_name = "S.S.Stripe"
+
+[sagru]
+display_name = "Sagru"
+
+[saraphim_garsva]
+display_name = "Saraphím Garšva"
+
+[sayuri_pastel]
+display_name = "Sayuri Pastel"
+
+[sbe]
+display_name = "SBE"
+
+[schlick]
+display_name = "Schlick"
+
+[scoobypup]
+display_name = "Scoobypup"
+
+[senkatoga]
+display_name = "Senkatoga"
+
+[senky]
+display_name = "Senky"
+aliases = ["Senky?"]
+
+[sera_akai]
+display_name = "Sera Akai"
+aliases = [
+    "Sera-Akai",
+    "Sera akai",
+]
+
+[shabam]
+display_name = "Shabam"
+
+[shawarmachine]
+display_name = "Shawarmachine"
+
+[shawntrrttll]
+display_name = "Shawntrrttll"
+
+[shishimaru]
+display_name = "Shishimaru"
+aliases = ["SHISHIMARU"]
+
+[shivaxi]
+display_name = "Shivaxi"
+
+[shloop]
+display_name = "Shloop"
+
+[silk_and_steel]
+display_name = "Silk and Steel"
+
+[sillybit]
+display_name = "SIllybit"
+
+[silver_aumsiruba_aum]
+display_name = "Silver ॐしるば～ॐ"
+
+[silverfoxx]
+display_name = "Silverfoxx"
+
+[simca]
+display_name = "Simca"
+
+[sinarisama]
+display_name = "Sinarisama"
+
+[siromi]
+display_name = "siromi"
+
+[skyla]
+display_name = "Skyla"
+
+[skylazt]
+display_name = "SkylaZT"
+
+[sladeax]
+display_name = "SladeAx"
+
+[slash_gallagher]
+display_name = "Slash Gallagher"
+
+[slimefiend]
+display_name = "Slimefiend"
+
+[snowie]
+display_name = "Snowie"
+
+[snuggles_prime]
+display_name = "Snuggles Prime"
+
+[sorami]
+display_name = "Sorami"
+
+[sperto]
+display_name = "Sperto"
+
+[sqn]
+display_name = "SQN"
+aliases = ["SQN?"]
+
+[stayawhile]
+display_name = "stayawhile"
+aliases = ["Stayawhile"]
+
+[stella_vrc]
+display_name = "Stella_VRC"
+
+[steph]
+display_name = "Steph"
+aliases = ["steph"]
+
+[still_confirming]
+display_name = "Still confirming"
+
+[stoob]
+display_name = "Stoob"
+
+[strawberry_protato]
+display_name = "Strawberry Protato"
+
+[strawberryprotato]
+display_name = "StrawberryProtato"
+
+[strawbs]
+display_name = "Strawbs"
+
+[stroobie]
+display_name = "Stroobie"
+
+[suenos_del_abismo_kale_b2b_aurora]
+display_name = "Suenos Del Abismo (Kale b2b Aurora)"
+
+[switch_angel]
+display_name = "Switch Angel"
+
+[syncusx]
+display_name = "Syncusx"
+
+[taisai]
+display_name = "Taisai"
+
+[tamagomago]
+display_name = "Tamagomago"
+aliases = ["tamagomago"]
+
+[tammy_the_deer]
+display_name = "Tammy the Deer"
+
+[tatsutracks]
+display_name = "TatsuTracks"
+
+[thelenzseesall]
+display_name = "TheLenzSeesAll"
+
+[thistlebunny]
+display_name = "Thistlebunny"
+
+[tiyarusia]
+display_name = "ちゃるしあ"
+
+[tokage]
+display_name = "Tokage"
+
+[tokage_tokage]
+display_name = "とかげ／Tokage"
+
+[transistors_morganite_draco]
+display_name = "Transistors (Morganite/Draco)"
+
+[traypin]
+display_name = "Traypin"
+
+[trinity]
+display_name = "Trinity"
+
+[tryptamise]
+display_name = "tryptamise"
+aliases = ["Tryptamise"]
+
+[tsubasa]
+display_name = "Tsubasa"
+
+[tsumugi_otonari]
+display_name = "Tsumugi Otonari"
+
+[tsunpiri]
+display_name = "Tsunpiri"
+
+[turels]
+display_name = "Turels"
+
+[tw0p0intzer0]
+display_name = "tw0p0intzer0"
+
+[twoheartz]
+display_name = "TwoHeartz"
+
+[typtamise]
+display_name = "Typtamise"
+
+[untitled]
+display_name = "-UNTITLED-"
+
+[v333v]
+display_name = "v333v"
+
+[vanity]
+display_name = "Vanity"
+
+[velan]
+display_name = "Velan"
+
+[venixia]
+display_name = "Venixia"
+aliases = ["VEnixia"]
+
+[verdantvale]
+display_name = "VerdantVale"
+
+[verminiferous_maybe]
+display_name = "Verminiferous (maybe)"
+
+[video_use]
+display_name = "(Video Use)"
+aliases = ["(VIDEO USE）"]
+
+[violet_thunder]
+display_name = "Violet Thunder"
+
+[vivalion]
+display_name = "Vivalion"
+
+[vox]
+display_name = "Vox"
+
+[vox3x]
+display_name = "VOXƎX"
+
+[wackangels]
+display_name = "wackangels"
+
+[waha]
+display_name = "Waha~?"
+aliases = [
+    "Waha-",
+    "Waha~",
+]
+
+[wake]
+display_name = "wake"
+aliases = ["Wake"]
+
+[wall_e]
+display_name = "Wall E"
+aliases = ["Wall-E"]
+
+[wallee]
+display_name = "Wallee"
+
+[warned1]
+display_name = "WarneD1"
+
+[weaver]
+display_name = "Weaver"
+
+[weaver_rtspt_stream_vrcdn_live_live_thewhitecrayon]
+display_name = "Weaver rtspt://stream.vrcdn.live/live/thewhitecrayon"
+
+[whimz]
+display_name = "Whimz"
+
+[white_crayon]
+display_name = "White Crayon"
+
+[whitty]
+display_name = "Whitty"
+
+[wildf1re]
+display_name = "WILDF1RE"
+
+[windy]
+display_name = "Windy"
+
+[winkzee]
+display_name = "WinkZee"
+
+[wire_witch]
+display_name = "WIRE_WITCH"
+
+[wookiedubs]
+display_name = "WookieDubs"
+aliases = [
+    "wookiedubs",
+    "Wookiedubs",
+]
+
+[wookieedubs]
+display_name = "Wookieedubs"
+aliases = [
+    "wookieedubs",
+    "WookieeDubs",
+]
+
+[woriwins]
+display_name = "Woriwins"
+
+[wrath]
+display_name = "Wrath"
+
+[wylda]
+display_name = "WYLDA"
+
+[xia]
+display_name = "Xia"
+
+[xiriya]
+display_name = "xiriya"
+
+[xnfe]
+display_name = "XNFE"
+
+[y]
+display_name = "y"
+aliases = ["Y"]
+
+[yakorusu]
+display_name = "Yakorusu"
+
+[yat0i]
+display_name = "Yat0i"
+
+[yorbae_matte]
+display_name = "Yorbae Matte"
+
+[yoru]
+display_name = "Yoru"
+aliases = ["yoru"]
+
+[yoru_yoru]
+display_name = "よる_yoru"
+
+[yossy]
+display_name = "Yossy"
+
+[yukatama]
+display_name = "YUKATAMA"
+aliases = ["Yukatama"]
+
+[yuki]
+display_name = "Yuki"
+
+[yunas]
+display_name = "Yunas"
+
+[zealot]
+display_name = "Zealot"
+
+[zeeke]
+display_name = "Zeeke"
+
+[zoomair]
+display_name = "zoomair"
+
+[zweihander]
+display_name = "Zweihander"

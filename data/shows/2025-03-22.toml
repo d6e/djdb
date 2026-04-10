@@ -1,0 +1,36 @@
+date = "2025-03-22"
+
+[[sets]]
+start = "21:00"
+dj = "kojo"
+
+[[sets]]
+start = "22:00"
+dj = "firescaw"
+
+[[sets]]
+start = "23:00"
+dj = "digitalmorgue"
+
+[[sets]]
+start = "24:00"
+dj = "gojo"
+
+[[sets]]
+start = "25:00"
+dj = "kitsuzo"
+vj = "steph"
+
+[[sets]]
+start = "26:00"
+dj = "aliquem"
+notes = "https://stream.vrcdn.live/live/aliquem.live.ts"
+
+[[sets]]
+start = "27:00"
+dj = "ars_goatia"
+vj = "aliquem_sky_art"
+
+[[sets]]
+start = "28:00"
+dj = "hidi"

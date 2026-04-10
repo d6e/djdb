@@ -1,0 +1,39 @@
+date = "2026-03-07"
+
+[[sets]]
+start = "21:00"
+dj = "p_i_n_k"
+notes = "rtspt://stream.vrcdn.live/live/pink"
+
+[[sets]]
+start = "22:00"
+dj = "ember"
+notes = "rtspt://stream.vrcdn.live/live/embervrc"
+
+[[sets]]
+start = "23:00"
+dj = "meowogai"
+vj = "weaver_rtspt_stream_vrcdn_live_live_thewhitecrayon"
+
+[[sets]]
+start = "24:00"
+dj = "dj_sleepy_gf"
+notes = "rtspt://stream.vrcdn.live/live/tinytinathefrog"
+
+[[sets]]
+start = "25:00"
+dj = "anomaly"
+notes = "rtspt://stream.vrcdn.live/live/djanomaly"
+
+[[sets]]
+start = "27:00"
+dj = "dragoo"
+notes = "rtspt://stream.vrcdn.live/live/dragoo"
+
+[[sets]]
+start = "28:00"
+dj = "genki"
+
+[[sets]]
+start = "29:00"
+dj = "ru"

@@ -1,0 +1,36 @@
+date = "2025-04-12"
+
+[[sets]]
+start = "22:00"
+dj = "meowski"
+
+[[sets]]
+start = "23:00"
+dj = "yoru"
+notes = "rtspt://stream.vrcdn.live/live/yoru"
+
+[[sets]]
+start = "24:00"
+dj = "kohada"
+notes = "rtspt://stream.vrcdn.live/live/kohadachan"
+
+[[sets]]
+start = "25:00"
+dj = "rnch"
+
+[[sets]]
+start = "26:00"
+dj = "kadachii_b2b_estrogen_dealer"
+
+[[sets]]
+start = "27:00"
+dj = "tamagomago"
+notes = "rtspt://stream.vrcdn.live/live/tamagomago"
+
+[[sets]]
+start = "28:00"
+dj = "sqn"
+
+[[sets]]
+start = "29:00"
+dj = "sera_akai"

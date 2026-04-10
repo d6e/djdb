@@ -1,0 +1,40 @@
+date = "2025-12-13"
+
+[[sets]]
+start = "21:00"
+dj = "pastel_folf"
+notes = "https://www.twitch.tv/pastelfolf"
+
+[[sets]]
+start = "22:00"
+dj = "shivaxi"
+notes = "rtspt://stream.vrcdn.live/live/shivaxi"
+
+[[sets]]
+start = "23:00"
+dj = "anomaly"
+
+[[sets]]
+start = "24:00"
+dj = "brother_durry"
+notes = "rtspt://stream.vrcdn.live/live/brotherdurry"
+
+[[sets]]
+start = "25:00"
+dj = "nin"
+notes = "rtspt://stream.vrcdn.live/live/easthemisphere"
+
+[[sets]]
+start = "26:00"
+dj = "ember"
+notes = "rtspt://stream.vrcdn.live/live/embervrc"
+
+[[sets]]
+start = "27:00"
+dj = "vivalion"
+notes = "rtspt://stream.vrcdn.live/live/vivalion"
+
+[[sets]]
+start = "28:00"
+dj = "sqn"
+notes = "rtspt://stream.vrcdn.live/live/vregypt"

@@ -1,0 +1,35 @@
+date = "2025-01-04"
+
+[[sets]]
+start = "21:00"
+dj = "sagru"
+
+[[sets]]
+start = "22:00"
+dj = "jyoshu"
+
+[[sets]]
+start = "23:00"
+dj = "ladybug_driima_b2b"
+
+[[sets]]
+start = "24:00"
+dj = "wrath"
+
+[[sets]]
+start = "25:00"
+dj = "kale"
+
+[[sets]]
+start = "26:00"
+dj = "ru"
+vj = "sinarisama"
+
+[[sets]]
+start = "27:00"
+dj = "ru"
+vj = "sinarisama"
+
+[[sets]]
+start = "28:00"
+dj = "open_deck"

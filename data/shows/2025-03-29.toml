@@ -1,0 +1,34 @@
+date = "2025-03-29"
+
+[[sets]]
+start = "21:00"
+dj = "ru"
+
+[[sets]]
+start = "22:00"
+dj = "johari_b2b_dieselsaurus"
+notes = "Aus"
+
+[[sets]]
+start = "23:00"
+dj = "defqon"
+
+[[sets]]
+start = "24:00"
+dj = "kale"
+
+[[sets]]
+start = "25:00"
+dj = "kagetora"
+
+[[sets]]
+start = "26:00"
+dj = "genki"
+
+[[sets]]
+start = "27:00"
+dj = "midekai"
+
+[[sets]]
+start = "28:00"
+dj = "dj_ear"

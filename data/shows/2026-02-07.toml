@@ -1,0 +1,41 @@
+date = "2026-02-07"
+
+[[sets]]
+start = "21:00"
+dj = "rain"
+vj = "rtspt_stream_vrcdn_live_live_rainiwa"
+notes = "Teitac on discord"
+
+[[sets]]
+start = "22:00"
+dj = "lucina"
+notes = "rtspt://stream.vrcdn.live/live/lucinachan"
+
+[[sets]]
+start = "23:00"
+dj = "nana_wunsek"
+notes = "rtspt://stream.vrcdn.live/live/457dude"
+
+[[sets]]
+start = "24:00"
+dj = "chickywashere"
+notes = "rtspt://stream.vrcdn.live/live/chickywashere"
+
+[[sets]]
+start = "25:00"
+dj = "babyjack"
+notes = "rtspt://stream.vrcdn.live/live/babyjack"
+
+[[sets]]
+start = "26:00"
+dj = "ars_gaoetia"
+notes = "rtspt://stream.vrcdn.live/live/gaogurrengar"
+
+[[sets]]
+start = "27:00"
+dj = "aliquem"
+notes = "rtspt://stream.vrcdn.live/live/aliquem"
+
+[[sets]]
+start = "28:00"
+dj = "antithesis"

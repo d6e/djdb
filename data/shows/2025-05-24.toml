@@ -1,0 +1,31 @@
+date = "2025-05-24"
+
+[[sets]]
+start = "21:00"
+dj = "future_funk_femme"
+
+[[sets]]
+start = "22:00"
+dj = "windy"
+
+[[sets]]
+start = "23:00"
+dj = "orso"
+
+[[sets]]
+start = "24:00"
+dj = "jinon"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "25:00"
+dj = "yat0i"
+notes = "Kaleidosky VRCDN"
+
+[[sets]]
+start = "26:00"
+dj = "bawbi"
+
+[[sets]]
+start = "27:00"
+dj = "jasmine"

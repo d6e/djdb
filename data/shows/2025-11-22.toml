@@ -1,0 +1,46 @@
+date = "2025-11-22"
+
+[[sets]]
+start = "21:00"
+dj = "jaime"
+notes = """
+rtspt://stream.vrcdn.live/live/arbibi
+"""
+
+[[sets]]
+start = "22:00"
+dj = "hails"
+notes = "rtspt://stream.vrcdn.live/live/hails"
+
+[[sets]]
+start = "23:00"
+dj = "andromeda"
+notes = "rtspt://stream.vrcdn.live/live/andromeda"
+
+[[sets]]
+start = "24:00"
+dj = "nanopixel"
+notes = """
+rtspt://stream.vrcdn.live/live/djquinn
+"""
+
+[[sets]]
+start = "25:00"
+dj = "ladybug"
+vj = "steph"
+notes = "rtspt://stream.vrcdn.live/live/softlysteph"
+
+[[sets]]
+start = "26:00"
+dj = "gojo"
+notes = "rtspt://stream.vrcdn.live/live/gojovrc"
+
+[[sets]]
+start = "27:00"
+dj = "narswhal_evrblum"
+notes = "rtspt://stream.vrcdn.live/live/aliquem"
+
+[[sets]]
+start = "28:00"
+dj = "driima"
+notes = "rtspt://stream.vrcdn.live/live/driima"

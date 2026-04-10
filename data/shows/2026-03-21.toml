@@ -1,0 +1,48 @@
+date = "2026-03-21"
+
+[[sets]]
+start = "21:00"
+dj = "elementjonny"
+notes = "https://stream.vrcdn.live/live/elementjonny.live.ts"
+
+[[sets]]
+start = "22:00"
+dj = "kojo"
+notes = "rtspt://stream.vrcdn.live/live/kiwiii"
+
+[[sets]]
+start = "23:00"
+dj = "kiwii"
+vj = "kai_steph"
+notes = "rtspt://stream.vrcdn.live/live/softlysteph"
+
+[[sets]]
+start = "24:00"
+dj = "apois"
+notes = "rtspt://stream.vrcdn.live/live/apois"
+
+[[sets]]
+start = "25:00"
+dj = "taisai"
+notes = "rtspt://stream.vrcdn.live/live/taisai"
+
+[[sets]]
+start = "26:00"
+dj = "hydie_nerdyhydra"
+vj = "casidhe"
+notes = "rtspt://stream.vrcdn.live/live/hydie"
+
+[[sets]]
+start = "27:00"
+dj = "ru"
+notes = "rtspt://stream.vrcdn.live/live/mamaru"
+
+[[sets]]
+start = "28:00"
+dj = "lili"
+notes = "rtspt://stream.vrcdn.live/live/olib"
+
+[[sets]]
+start = "29:00"
+dj = "olib"
+notes = "rtspt://stream.vrcdn.live/live/olib"

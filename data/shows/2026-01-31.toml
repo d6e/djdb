@@ -1,0 +1,36 @@
+date = "2026-01-31"
+
+[[sets]]
+start = "21:00"
+dj = "hails"
+notes = "rtspt://stream.vrcdn.live/live/hails"
+
+[[sets]]
+start = "22:00"
+dj = "hidden5s"
+notes = "rtspt://stream.vrcdn.live/live/shadowwulf82"
+
+[[sets]]
+start = "23:00"
+dj = "jazzy_senpai"
+notes = "rtspt://stream.vrcdn.live/live/jazzy"
+
+[[sets]]
+start = "24:00"
+dj = "alease"
+notes = "rtspt://stream.vrcdn.live/live/kaleidosky"
+
+[[sets]]
+start = "25:00"
+dj = "blazelion"
+notes = "rtspt://stream.vrcdn.live/live/blazethelion"
+
+[[sets]]
+start = "26:00"
+dj = "kohada"
+notes = "rtspt://stream.vrcdn.live/live/kohadachan"
+
+[[sets]]
+start = "27:00"
+dj = "ru"
+notes = "rtspt://stream.vrcdn.live/live/thewhitecrayon"

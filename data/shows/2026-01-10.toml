@@ -1,0 +1,44 @@
+date = "2026-01-10"
+
+[[sets]]
+start = "21:00"
+dj = "demrie"
+
+[[sets]]
+start = "22:00"
+dj = "dj_quinn"
+vj = "syncusx"
+notes = "rtspt://stream.vrcdn.live/live/syncus"
+
+[[sets]]
+start = "23:00"
+dj = "keno_tatsu"
+vj = "jinx"
+notes = "rtspt://stream.vrcdn.live/live/kenotatsu"
+
+[[sets]]
+start = "24:00"
+dj = "narshwhal"
+notes = "rtspt://stream.vrcdn.live/live/cybercvlt"
+
+[[sets]]
+start = "25:00"
+dj = "nyaaa"
+vj = "keno"
+notes = "rtspt://stream.vrcdn.live/live/kenotatsu or rtspt://stream.vrcdn.live/live/nyaaaa"
+
+[[sets]]
+start = "26:00"
+dj = "klu3"
+notes = "rtspt://stream.vrcdn.live/live/beesha"
+
+[[sets]]
+start = "27:00"
+dj = "basspuppy"
+notes = "https://stream.vrcdn.live/live/wuffworks.live.ts"
+
+[[sets]]
+start = "28:00"
+dj = "dulce"
+vj = "gunnthor"
+notes = "rtspt://stream.vrcdn.live/live/dulcearma"

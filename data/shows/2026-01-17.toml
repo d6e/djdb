@@ -1,0 +1,42 @@
+date = "2026-01-17"
+
+[[sets]]
+start = "21:00"
+dj = "sperto"
+notes = "rtspt://stream.vrcdn.live/live/kaleidosky"
+
+[[sets]]
+start = "22:00"
+dj = "traypin"
+notes = "rtspt://stream.vrcdn.live/live/olib"
+
+[[sets]]
+start = "23:00"
+dj = "olib"
+vj = "demrie"
+notes = "rtspt://stream.vrcdn.live/live/rosebunny"
+
+[[sets]]
+start = "24:00"
+dj = "brooke"
+notes = "rtspt://stream.vrcdn.live/live/kaleidosky"
+
+[[sets]]
+start = "25:00"
+dj = "hecka"
+notes = "rtspt://stream.vrcdn.live/live/hecka"
+
+[[sets]]
+start = "26:00"
+dj = "tamagomago"
+notes = "rtspt://stream.vrcdn.live/live/tamagomago"
+
+[[sets]]
+start = "27:00"
+dj = "ashumi"
+notes = "rtspt://stream.vrcdn.live/live/ashumi"
+
+[[sets]]
+start = "28:00"
+dj = "ru"
+notes = "rtspt://stream.vrcdn.live/live/mamaru"

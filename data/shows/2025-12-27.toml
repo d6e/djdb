@@ -1,0 +1,36 @@
+date = "2025-12-27"
+
+[[sets]]
+start = "21:00"
+dj = "electro"
+notes = "Anniversary"
+
+[[sets]]
+start = "22:00"
+dj = "taisai"
+notes = "rtspt://stream.vrcdn.live/live/taisai"
+
+[[sets]]
+start = "23:00"
+dj = "ksk_u"
+notes = "rtspt://stream.vrcdn.live/live/ksk"
+
+[[sets]]
+start = "24:00"
+dj = "wallee"
+
+[[sets]]
+start = "25:00"
+dj = "kohada"
+
+[[sets]]
+start = "26:00"
+dj = "senky"
+
+[[sets]]
+start = "27:00"
+dj = "sqn"
+
+[[sets]]
+start = "28:00"
+dj = "yoru"

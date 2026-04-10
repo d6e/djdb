@@ -1,0 +1,43 @@
+date = "2026-02-21"
+
+[[sets]]
+start = "21:00"
+dj = "malaa"
+vj = "lost_takeover_bastet_to_book_vj_keno"
+notes = "rtspt://stream.vrcdn.live/live/jinx"
+
+[[sets]]
+start = "22:00"
+dj = "faerie"
+vj = "rtspt_stream_vrcdn_live_live_thewhitecrayon"
+notes = "rtspt://stream.vrcdn.live/live/clydemachine"
+
+[[sets]]
+start = "23:00"
+dj = "friendshp"
+notes = "rtspt://stream.vrcdn.live/live/friendsh1p"
+
+[[sets]]
+start = "24:00"
+dj = "velan"
+notes = "rtspt://stream.vrcdn.live/live/velan"
+
+[[sets]]
+start = "25:00"
+dj = "code_jin"
+notes = "rtspt://stream.vrcdn.live/live/fives"
+
+[[sets]]
+start = "26:00"
+dj = "bvstet"
+notes = "rtspt://stream.vrcdn.live/live/bvstetdnb"
+
+[[sets]]
+start = "27:00"
+dj = "juno"
+notes = "rtspt://stream.vrcdn.live/live/lyricblanket"
+
+[[sets]]
+start = "28:00"
+dj = "digitalroze"
+notes = "rtspt://stream.vrcdn.live/live/"

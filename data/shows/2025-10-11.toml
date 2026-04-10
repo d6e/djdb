@@ -1,0 +1,38 @@
+date = "2025-10-11"
+
+[[sets]]
+start = "20:00"
+dj = "atkom"
+
+[[sets]]
+start = "21:00"
+dj = "ejay"
+notes = "Sperto booking help"
+
+[[sets]]
+start = "22:00"
+dj = "woriwins"
+
+[[sets]]
+start = "23:00"
+dj = "skyla"
+
+[[sets]]
+start = "24:00"
+dj = "azarya"
+
+[[sets]]
+start = "25:00"
+dj = "jestertwo"
+
+[[sets]]
+start = "26:00"
+dj = "psicough"
+
+[[sets]]
+start = "27:00"
+dj = "sperto"
+
+[[sets]]
+start = "28:00"
+dj = "shawntrrttll"

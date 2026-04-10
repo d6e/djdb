@@ -1,0 +1,35 @@
+date = "2025-10-04"
+
+[[sets]]
+start = "21:00"
+dj = "jasmine_pizza"
+
+[[sets]]
+start = "22:00"
+dj = "vox"
+notes = "TG Chat"
+
+[[sets]]
+start = "23:00"
+dj = "lau"
+
+[[sets]]
+start = "24:00"
+dj = "ember"
+
+[[sets]]
+start = "25:00"
+dj = "wildf1re"
+
+[[sets]]
+start = "26:00"
+dj = "missalykatt"
+
+[[sets]]
+start = "27:00"
+dj = "yunas"
+
+[[sets]]
+start = "28:00"
+dj = "jack"
+notes = "Telegram AFC DJ"

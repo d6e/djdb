@@ -1,0 +1,42 @@
+date = "2025-12-20"
+
+[[sets]]
+start = "21:00"
+dj = "rumbla"
+
+[[sets]]
+start = "22:00"
+dj = "zealot"
+
+[[sets]]
+start = "23:00"
+dj = "baphomet"
+
+[[sets]]
+start = "24:00"
+dj = "honeydingo"
+notes = "rtspt://stream.vrcdn.live/live/honeydingo"
+
+[[sets]]
+start = "25:00"
+dj = "aliquem"
+notes = """
+rtspt://stream.vrcdn.live/live/aliquem
+"""
+
+[[sets]]
+start = "26:00"
+dj = "ars_gaoetia"
+notes = """
+rtspt://stream.vrcdn.live/live/gaogurrengar
+"""
+
+[[sets]]
+start = "27:00"
+dj = "strawberryprotato"
+vj = "verminiferous_maybe"
+notes = "rtspt://stream.vrcdn.live/live/strawberryprotato"
+
+[[sets]]
+start = "28:00"
+dj = "genki"

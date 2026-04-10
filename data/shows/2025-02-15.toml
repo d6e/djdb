@@ -1,0 +1,41 @@
+date = "2025-02-15"
+
+[[sets]]
+start = "21:00"
+dj = "karina_maenashi"
+
+[[sets]]
+start = "22:00"
+dj = "kima"
+
+[[sets]]
+start = "23:00"
+dj = "violet_thunder"
+vj = "depereo"
+
+[[sets]]
+start = "24:00"
+dj = "strawbs"
+
+[[sets]]
+start = "25:00"
+dj = "silk_and_steel"
+notes = "Razr & Larka"
+
+[[sets]]
+start = "26:00"
+dj = "keebs"
+
+[[sets]]
+start = "27:00"
+dj = "tokage_tokage"
+notes = "rtspt://stream.vrcdn.live/live/tokage"
+
+[[sets]]
+start = "28:00"
+dj = "loveleemusic"
+
+[[sets]]
+start = "29:00"
+dj = "saraphim_garsva"
+vj = "rtspt_stream_vrcdn_live_live_atomicpeach"

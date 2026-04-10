@@ -1,0 +1,37 @@
+date = "2025-10-25"
+
+[[sets]]
+start = "21:00"
+dj = "mercury_in_gemini"
+
+[[sets]]
+start = "22:00"
+dj = "bubbi_the_whale"
+
+[[sets]]
+start = "23:00"
+dj = "white_crayon"
+
+[[sets]]
+start = "24:00"
+dj = "kohada"
+notes = "rtspt://stream.vrcdn.live/live/kohadachan"
+
+[[sets]]
+start = "25:00"
+dj = "taisai"
+notes = "rtspt://stream.vrcdn.live/live/taisai"
+
+[[sets]]
+start = "26:00"
+dj = "ksk_u"
+notes = "rtspt://stream.vrcdn.live/live/ksk"
+
+[[sets]]
+start = "27:00"
+dj = "tsunpiri"
+notes = "Kaleidosky CDN"
+
+[[sets]]
+start = "28:00"
+dj = "fovero"

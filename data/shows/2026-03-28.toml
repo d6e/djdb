@@ -1,0 +1,46 @@
+date = "2026-03-28"
+
+[[sets]]
+start = "20:00"
+dj = "aliquem"
+notes = "Order of the Broken Beats Takeover :GoblinMode"
+
+[[sets]]
+start = "21:00"
+dj = "kohada"
+
+[[sets]]
+start = "22:00"
+dj = "turels"
+
+[[sets]]
+start = "23:00"
+dj = "katz"
+
+[[sets]]
+start = "24:00"
+dj = "fyzika"
+
+[[sets]]
+start = "25:00"
+dj = "kxa"
+
+[[sets]]
+start = "26:00"
+dj = "goblin_mode"
+
+[[sets]]
+start = "27:00"
+dj = "pizza_princess"
+
+[[sets]]
+start = "28:00"
+dj = "denzo"
+
+[[sets]]
+start = "29:00"
+dj = "yoru"
+
+[[sets]]
+start = "30:00"
+dj = "ru"

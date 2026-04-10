@@ -1,0 +1,34 @@
+date = "2025-03-01"
+
+[[sets]]
+start = "21:00"
+dj = "resato"
+
+[[sets]]
+start = "22:00"
+dj = "pawllydee"
+
+[[sets]]
+start = "23:00"
+dj = "andromeda"
+
+[[sets]]
+start = "24:00"
+dj = "skylazt"
+notes = "rtspt://stream.vrcdn.live/live/gpot"
+
+[[sets]]
+start = "25:00"
+dj = "6ix"
+
+[[sets]]
+start = "26:00"
+dj = "hanabi_aero"
+
+[[sets]]
+start = "27:00"
+dj = "ru"
+
+[[sets]]
+start = "28:00"
+dj = "sera_akai"

@@ -1,0 +1,37 @@
+date = "2025-07-19"
+
+[[sets]]
+start = "21:00"
+dj = "dj_tsiran"
+
+[[sets]]
+start = "22:00"
+dj = "baphomet"
+
+[[sets]]
+start = "23:00"
+dj = "aryhith"
+
+[[sets]]
+start = "24:00"
+dj = "aliquem"
+notes = "rtspt://stream.vrcdn.live/live/aliquem"
+
+[[sets]]
+start = "25:00"
+dj = "tamagomago"
+notes = "rtspt://stream.vrcdn.live/live/tamagomago"
+
+[[sets]]
+start = "26:00"
+dj = "zweihander"
+notes = "Cyntheszr & Giga"
+
+[[sets]]
+start = "27:00"
+dj = "zweihander"
+notes = "2 hour set"
+
+[[sets]]
+start = "28:00"
+dj = "whimz"
