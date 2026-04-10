@@ -255,8 +255,17 @@ fn performer_link(
 // ---------- page renderers ----------
 
 fn landing(ds: &Dataset, cfg: &BuildConfig) -> Markup {
-    let upcoming = ds.shows.iter().find(|s| s.date >= cfg.today);
-    let recent: Vec<&Show> = ds
+    let next = ds.shows.iter().find(|s| s.date >= cfg.today);
+    let next_date = next.map(|s| s.date);
+    let upcoming: Vec<&Show> = ds
+        .shows
+        .iter()
+        .filter(|s| match next_date {
+            Some(nd) => s.date > nd,
+            None => false,
+        })
+        .collect();
+    let past: Vec<&Show> = ds
         .shows
         .iter()
         .rev()
@@ -271,7 +280,7 @@ fn landing(ds: &Dataset, cfg: &BuildConfig) -> Markup {
             h1 { "KaleidoSky" }
             p class="tagline" { "Weekly DJ lineups in VRChat." }
 
-            @if let Some(show) = upcoming {
+            @if let Some(show) = next {
                 section class="next-show" {
                     h2 {
                         "Next show · "
@@ -283,14 +292,30 @@ fn landing(ds: &Dataset, cfg: &BuildConfig) -> Markup {
                 p { "No upcoming shows scheduled." }
             }
 
-            @if !recent.is_empty() {
-                section class="recent" {
-                    h2 { "Recent shows" }
+            @if !upcoming.is_empty() {
+                section class="upcoming" {
+                    h2 { "Upcoming" }
                     ul class="show-list" {
-                        @for s in recent {
+                        @for s in upcoming {
                             li {
                                 a href=(url(cfg, &format!("shows/{}/", s.date))) {
-                                    (s.date.format("%Y-%m-%d").to_string())
+                                    (s.date.format("%Y-%m-%d · %a").to_string())
+                                }
+                                " · " (s.sets.len()) " sets"
+                            }
+                        }
+                    }
+                }
+            }
+
+            @if !past.is_empty() {
+                section class="past" {
+                    h2 { "Past shows" }
+                    ul class="show-list" {
+                        @for s in past {
+                            li {
+                                a href=(url(cfg, &format!("shows/{}/", s.date))) {
+                                    (s.date.format("%Y-%m-%d · %a").to_string())
                                 }
                                 " · " (s.sets.len()) " sets"
                             }
