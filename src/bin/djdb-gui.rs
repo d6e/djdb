@@ -281,19 +281,33 @@ impl DjdbApp {
                 ui.separator();
 
                 let filter = self.show_filter.to_lowercase();
-                egui::ScrollArea::vertical().show(ui, |ui| {
-                    for date in &dates {
-                        if !filter.is_empty() && !date.to_string().contains(&filter) {
-                            continue;
-                        }
-                        if ui
-                            .selectable_label(selected == Some(*date), date.to_string())
-                            .clicked()
-                        {
-                            want_select = Some(*date);
-                        }
-                    }
-                });
+                egui::ScrollArea::vertical()
+                    .id_salt("shows_scroll")
+                    .auto_shrink([false, false])
+                    .show(ui, |ui| {
+                        ui.with_layout(
+                            egui::Layout::top_down(egui::Align::Min)
+                                .with_cross_justify(true),
+                            |ui| {
+                                for date in &dates {
+                                    if !filter.is_empty()
+                                        && !date.to_string().contains(&filter)
+                                    {
+                                        continue;
+                                    }
+                                    if ui
+                                        .selectable_label(
+                                            selected == Some(*date),
+                                            date.to_string(),
+                                        )
+                                        .clicked()
+                                    {
+                                        want_select = Some(*date);
+                                    }
+                                }
+                            },
+                        );
+                    });
 
                 ui.separator();
                 ui.label("New show:");
@@ -670,25 +684,35 @@ impl DjdbApp {
                 ui.separator();
 
                 let filter = self.perf_filter.to_lowercase();
-                egui::ScrollArea::vertical().show(ui, |ui| {
-                    for (slug, display, aliases) in &entries {
-                        if !filter.is_empty() {
-                            let hay = format!(
-                                "{} {} {}",
-                                slug,
-                                display.to_lowercase(),
-                                aliases.to_lowercase()
-                            );
-                            if !hay.contains(&filter) {
-                                continue;
-                            }
-                        }
-                        let is_selected = selected_slug.as_deref() == Some(slug.as_str());
-                        if ui.selectable_label(is_selected, display).clicked() {
-                            want_select = Some(slug.clone());
-                        }
-                    }
-                });
+                egui::ScrollArea::vertical()
+                    .id_salt("perf_scroll")
+                    .auto_shrink([false, false])
+                    .show(ui, |ui| {
+                        ui.with_layout(
+                            egui::Layout::top_down(egui::Align::Min)
+                                .with_cross_justify(true),
+                            |ui| {
+                                for (slug, display, aliases) in &entries {
+                                    if !filter.is_empty() {
+                                        let hay = format!(
+                                            "{} {} {}",
+                                            slug,
+                                            display.to_lowercase(),
+                                            aliases.to_lowercase()
+                                        );
+                                        if !hay.contains(&filter) {
+                                            continue;
+                                        }
+                                    }
+                                    let is_selected =
+                                        selected_slug.as_deref() == Some(slug.as_str());
+                                    if ui.selectable_label(is_selected, display).clicked() {
+                                        want_select = Some(slug.clone());
+                                    }
+                                }
+                            },
+                        );
+                    });
 
                 ui.separator();
                 ui.label("New performer:");
